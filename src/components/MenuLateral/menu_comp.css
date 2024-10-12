@@ -1,0 +1,63 @@
+* {
+    font-family: Poppins, "sans-serif";
+    background-color: #171717;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 200px; /* Definir uma largura fixa */
+    margin-left: 1rem;
+    text-align: left; /* Alinha o conteúdo à esquerda */
+    position: fixed; /* Fixa o menu na lateral da página */
+    top: 0;
+}
+
+.img-perfil {
+    border-radius: 50%;
+    border: 3px solid #FF0000;
+    padding: 3px;
+    width: 5rem;
+    display: block;
+    margin: 1rem auto; /* Centraliza a imagem no contêiner */
+}
+
+.username {
+    color: #fff;
+    font-size: 1.1rem;
+    text-align: center; /* Centraliza o nome de usuário */
+}
+
+.follow-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.follow-info p {
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.lista {
+    text-align: left;
+}
+
+.lista ul {
+    list-style: none;
+    padding: 0;
+}
+
+.lista ul li {
+    color: #fff;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.lista ul li i {
+    margin-right: 0.5rem; /* Espaço entre ícone e texto */
+}
