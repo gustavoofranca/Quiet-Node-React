@@ -1,0 +1,130 @@
+/* Estilo para preenchimento automático do input */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+    -webkit-text-fill-color: #fff;
+}
+
+.login-box {
+    width: 80%;
+    max-width: 500px;
+    padding: 2rem;
+    background-color: rgba(32, 32, 32, 0.9);
+    border-radius: 10px;
+    border: #e50914 1px solid;
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 100px;
+}
+
+h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.icon-eye {
+  fill: #e50914;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 1.2rem; 
+  right: 34px;
+  position: relative;
+  top: 3px;
+}
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    background-color: #333;
+    color: #fff;
+}
+
+input[type="email"] {
+    border: #fff 2.5px solid;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 60px rgba(229, 9, 20, 0.4);
+    width: 29.2rem;
+}
+
+input[type="password"] {
+    border: 1px solid #fff;
+    width: 29.2rem
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    width: 33.1rem
+}
+
+
+.btn-primary {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-google {
+    margin-right: 0.5rem;
+    stroke: #000;
+    stroke-width: 0.5px;
+}
+
+.login-footer {
+    text-align: center;
+    color: #888;
+    margin-top: 1rem;
+}
+
+.login-footer a {
+    color: #e50914;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
