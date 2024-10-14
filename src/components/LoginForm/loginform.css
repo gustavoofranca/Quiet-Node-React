@@ -1,4 +1,4 @@
-/* Estilo para preenchimento automático do input */
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -15,7 +15,6 @@ html,
 body {
     height: 100%;
     overflow: hidden;
-    /* Previne rolagem desnecessária */
 }
 
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import { FaHome, FaSearch, FaUserCog } from 'react-icons/fa'; // Importa os ícones que você precisa
+import { FaHome, FaSearch, FaUserCog } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
-import './menu_comp.css'; // Importa o CSS
+import './menu_comp.css';
 import Perfil from '../../images/PerfilADM.png';
 
 const MenuLateral = () => {

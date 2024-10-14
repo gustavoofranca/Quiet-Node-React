@@ -2,16 +2,13 @@ import React from 'react';
 import { FaEye } from 'react-icons/fa';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const LoginComp = () => {
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Previne o comportamento padrão do formulário
-    // Aqui você pode adicionar a lógica para criar a conta (se necessário)
-
-    // Após a lógica de criação da conta, redireciona para a página home
+    e.preventDefault();
     navigate('/home');
   };
 
@@ -23,7 +20,7 @@ const LoginComp = () => {
 
       <h2>Criar uma conta</h2>
 
-      <form onSubmit={handleSubmit}> {/* Adiciona a função handleSubmit */}
+      <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input type="email" id="email" placeholder="example@gmail.com" required />

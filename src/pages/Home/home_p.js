@@ -7,7 +7,7 @@ const Home = () => {
     <div className="home-container">
       <MenuLateral />
       <div className="main-content">
-        {/* Adicione mais conteúdo aqui, como postagens ou um feed de atividades */}
+
       </div>
     </div>
   );

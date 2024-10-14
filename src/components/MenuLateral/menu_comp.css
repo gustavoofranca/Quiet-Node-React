@@ -1,12 +1,12 @@
 .container {
     width: 200px;
     height: 100vh;
-    margin-left: 1rem; /* Mantém o espaço à esquerda */
-    background-color: #171717; /* Cor de fundo do menu */
+    margin-left: 1rem;
+    background-color: #171717;
     padding: 5px;
     text-align: left;
     position: fixed;
-    left: 0; /* Garante que o container esteja fixado à esquerda */
+    left: 0; 
 }
 
 .container::after {
@@ -17,8 +17,8 @@
     right: -10px; 
     width: 5px; 
     height: 100%; 
-    box-shadow: 5px 0 10px rgba(255, 255, 255, 0.5); /* Efeito de iluminação */
-    z-index: -1; /* Coloca o pseudo-elemento atrás do menu */
+    box-shadow: 5px 0 10px rgba(255, 255, 255, 0.5);
+    z-index: -1;
 }
 
 .img-perfil {
@@ -66,8 +66,8 @@
 }
 
 .lista ul li i {
-    margin-right: 0rem; /* Aumente o espaço entre ícone e texto */
-    flex-shrink: 0; /* Impede que o ícone encolha, se necessário */
+    margin-right: 0rem;
+    flex-shrink: 0; 
 }
 
 .logout {  
