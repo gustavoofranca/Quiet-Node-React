@@ -11,10 +11,12 @@ input:-webkit-autofill:active {
     font-family: 'Poppins', sans-serif;
 }
 
-html, body {
+html,
+body {
     height: 100%;
-    overflow: hidden; /* Previne rolagem desnecessária */
-  }
+    overflow: hidden;
+    /* Previne rolagem desnecessária */
+}
 
 
 .login-box {
@@ -53,15 +55,16 @@ label {
 }
 
 .icon-eye {
-  fill: #e50914;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-size: 1.2rem; 
-  right: 34px;
-  position: relative;
-  top: 3px;
+    fill: #e50914;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-size: 1.2rem;
+    right: 34px;
+    position: relative;
+    top: 3px;
 }
+
 input {
     width: 100%;
     padding: 0.8rem;
@@ -75,8 +78,8 @@ input {
 input[type="email"] {
     border: #fff 2.5px solid;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
-                0 0 40px rgba(255, 255, 255, 0.6),
-                0 0 60px rgba(229, 9, 20, 0.4);
+        0 0 40px rgba(255, 255, 255, 0.6),
+        0 0 60px rgba(229, 9, 20, 0.4);
     width: 27.09rem;
 }
 

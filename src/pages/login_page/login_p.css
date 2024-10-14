@@ -27,7 +27,7 @@
   height: 100%;
   border-right: 5px #fff solid;
   filter: blur(40px);
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .login-right {

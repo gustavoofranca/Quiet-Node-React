@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaEye } from 'react-icons/fa'; 
+import { FaEye } from 'react-icons/fa';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
