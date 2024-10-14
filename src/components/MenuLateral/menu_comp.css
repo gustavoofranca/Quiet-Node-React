@@ -1,16 +1,18 @@
-* {
+
+.home-container {
     font-family: Poppins, "sans-serif";
     background-color: #171717;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 .container {
-    width: 200px; /* Definir uma largura fixa */
+    width: 200px;
     margin-left: 1rem;
-    text-align: left; /* Alinha o conteúdo à esquerda */
-    position: fixed; /* Fixa o menu na lateral da página */
+    text-align: left;
+    position: fixed;
     top: 0;
 }
 
