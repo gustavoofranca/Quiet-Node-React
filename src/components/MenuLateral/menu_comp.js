@@ -4,8 +4,17 @@ import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
 import Perfil from '../../images/PerfilADM.png';
-
+import { useNavigate } from 'react-router-dom';
 const MenuLateral = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+
+    localStorage.removeItem('userInfo');
+
+    navigate('/');
+  };
+
   return (
     <div className="container">
       <img src={Perfil} alt="Perfil" className="img-perfil" />
@@ -22,10 +31,7 @@ const MenuLateral = () => {
           <li><FaSearch className='icons' /> Explorar</li>
           <li><FaUserCog className='icons' /> Configurações</li>
           <li><TbMessageCircleUser className='mensagem' /> Mensagens</li>
-          
-
-
-          <li><CiLogout className='logout'  /> Sair</li>
+          <li onClick={handleLogout}><CiLogout className='logout' /> Sair</li>
         </ul>
       </div>
     </div>

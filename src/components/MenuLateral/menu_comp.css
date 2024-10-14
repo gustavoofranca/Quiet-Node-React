@@ -68,15 +68,22 @@
 .lista ul li i {
     margin-right: 0rem;
     flex-shrink: 0; 
+    cursor: pointer;
+    color: #FF0000
 }
-
 .logout {  
-    stroke: #fff;
+    stroke: #FF0000;
+    color:#FF0000;
     stroke-width: 0.156rem;
     margin-right: 0.6rem;
     width: 30px;
+    cursor: pointer;
+    fill: #FF0000;
 }
 
+.lista ul li.logout {
+    cursor: pointer;
+}
 .icons {
     margin-right: 0.6rem;
     width: 30px;
