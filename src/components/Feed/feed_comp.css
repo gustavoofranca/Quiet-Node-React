@@ -1,0 +1,14 @@
+.imagem {
+    margin: 10px auto; /* Centraliza a imagem e adiciona espaço em torno dela */
+    width: 100%; /* Define a largura da imagem */
+    max-width: 600px; /* Define uma largura máxima para as imagens */
+    height: auto; /* Mantém a proporção da imagem */
+    overflow: hidden; /* Garante que o conteúdo não saia do contêiner */
+}
+
+.imagem img {
+    width: 500px; /* Faz com que a imagem ocupe toda a largura do contêiner */
+    height: 500px; /* Mantém a proporção da imagem */
+    border-radius: 0; /* Remove borda arredondada */
+    object-fit: cover; /* Cobre todo o espaço do contêiner sem distorção */
+}

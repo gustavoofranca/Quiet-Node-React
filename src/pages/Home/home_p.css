@@ -3,3 +3,11 @@
     height: 100vh;
     background-color: #171717;
 }
+
+.main-content {
+    flex: 1;
+    margin-left: 1px;
+    padding: 1rem;
+    overflow-y: auto;
+}
+

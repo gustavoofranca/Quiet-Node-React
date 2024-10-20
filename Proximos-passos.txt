@@ -1,0 +1,13 @@
+- Criar uma api de imagens, ou arrumar a atual ou usar uma pronta ☑
+- Usar o Firebase para fornecer as imagens à api
+- Fazer o login funcionar (back-end)
+- Implementar o Firebase onde for possivel: login, postagens, likes, comentarios e etc
+- Tentar fazer api do gemini-ai funcionar como assistente virtual da rede social
+- Sistema de notificações ( se possivel)
+- Balões de aviso na tela, para erros e confirmaçoes etc (esqueci o nome)
+- Abrir os stories
+- Perfis sugeridos
+- **Talvez** ↓
+- "DM", mas ja acho demais
+- Pesquisa de postagens por #
+- Sistema de grupos e comunidades *prometido no escopo do projeto mas nunca feito*
