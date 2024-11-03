@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 
 // Bibliotecas para criação e verificação de Usuário
-import { auth } from '../../firebaseConnectiom';
+import { auth } from '../../firebaseConnection';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
 const LoginComp = () => {
@@ -77,7 +77,7 @@ const LoginComp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/');
+    navigate('/home');
   };
 
   return (
