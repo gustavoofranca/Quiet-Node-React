@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaEye } from 'react-icons/fa';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 
 // Bibliotecas para criação e verificação de Usuário
 import { auth } from '../../firebaseConnection';
@@ -59,6 +59,7 @@ const LoginComp = () => {
         });
         setEmail('');
         setSenha('');
+        redirect('/home');
       })
       .catch(() => {
         alert('Erro ao fazer o login!');
@@ -69,10 +70,8 @@ const LoginComp = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate('/home');
-  };
+
+
 
   return (
     <div className="login-box">
@@ -82,7 +81,7 @@ const LoginComp = () => {
 
       <h2>Criar uma conta</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input type="email" placeholder="Digite um email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -96,7 +95,7 @@ const LoginComp = () => {
           </div>
         </div>
 
-        <button type="submit" className="btn-primary" onClick={novoUsuario}>Criar Conta</button>
+        <button type="submit" className="btn-login" onClick={logarUsuario}>Entrar</button>
 
         <button type="button" className="btn-google">
           <FcGoogle className="icon-google" /> Continue com Google

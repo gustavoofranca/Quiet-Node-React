@@ -157,7 +157,6 @@ const Feed = () => {
     setProprietario(post.proprietario);
     setDescricao(post.descricao);
     setImage(post.image);
-
   }
 
 

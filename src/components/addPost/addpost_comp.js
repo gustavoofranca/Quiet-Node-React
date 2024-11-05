@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebaseConnection';
 import { doc, collection, addDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import './addpost_comp.css';
 
 
 const AddPost = () => {
@@ -107,8 +108,9 @@ const AddPost = () => {
         setProprietario(post.proprietario);
         setDescricao(post.descricao);
         setImage(post.image);
-
     }
+
+
     return (
         <div className="posts-container">
             <label>Usuário: </label>
@@ -124,10 +126,10 @@ const AddPost = () => {
 
             <ul>
                 {post.map((value) => (
-                    <li className="post-container" key={value.id}>
+                    <li className="addpost-container" key={value.id}>
                         <span> Usuario: {value.proprietario}</span>
-                        <img className="post-image" src={value.image} alt={value.proprietario} />
-                        <span> Descricao: {value.descricao}</span>
+                        <img className="addpost-image" src={value.image} alt={value.proprietario} />
+                        <span className='addpost-descricao'> Descricao: {value.descricao}</span>
                         <button onClick={() => carregarPostParaEdicao(value)}>Editar</button>
                         <button onClick={() => excluirPost(value.id)}>Excluir</button>
                     </li>
