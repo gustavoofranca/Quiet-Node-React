@@ -65,13 +65,7 @@ const LoginComp = () => {
       });
   }
 
-  async function fazerLogout() {
-    await signOut(auth);
-    setUsuario(false);
-    setDetalhesUsuario({});
-  }
-
-
+  
 
   const navigate = useNavigate();
 

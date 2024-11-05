@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaHome, FaSearch, FaUserCog } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
 import Perfil from '../../images/PerfilADM.png';
 import { useNavigate } from 'react-router-dom';
+
+// Bibliotecas para criação e verificação de Usuário
+import { auth } from '../../firebaseConnection';
+import { signOut } from "firebase/auth";
+
+
 const MenuLateral = () => {
+  const [usuario, setUsuario] = useState(false);
+  const [detalhesUsuario, setDetalhesUsuario] = useState({});
+
+  async function fazerLogout() {
+    await signOut(auth);
+    setUsuario(false);
+    setDetalhesUsuario({});
+  }
+
+
   const navigate = useNavigate();
 
+  /*
   const handleLogout = () => {
-
+  
     localStorage.removeItem('userInfo');
-
+  
     navigate('/');
   };
+  */
 
   return (
     <div className="container">
@@ -31,7 +49,7 @@ const MenuLateral = () => {
           <li><FaSearch className='icons' /> Explorar</li>
           <li><FaUserCog className='icons' /> Configurações</li>
           <li><TbMessageCircleUser className='mensagem' /> Mensagens</li>
-          <li onClick={handleLogout}><CiLogout className='logout' /> Sair</li>
+          <li onClick={fazerLogout}><CiLogout className='logout' /> Sair</li>
         </ul>
       </div>
     </div>
