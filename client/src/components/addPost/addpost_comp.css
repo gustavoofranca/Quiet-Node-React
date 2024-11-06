@@ -1,0 +1,106 @@
+/* Container principal */
+.addpost-main-container {
+    max-width: 100%;
+    min-height: 100vh;
+    padding: 2%;
+    color: #fff;
+    overflow-y: auto;
+    background-color: #222;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo do formulário de adicionar post */
+.addpost-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.addpost-form label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.addpost-form textarea {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    resize: vertical;
+}
+
+.addpost-form button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 5px;
+}
+
+.addpost-form button:hover {
+    background-color: #ff5733;
+}
+
+.posts-container {
+    max-height: calc(100vh - 45vh); /* Ajuste para que a lista de posts tenha um limite de altura */
+    display: flex;
+    flex-direction: column
+}
+
+.addpost-post-container {
+    border-bottom: 2px #ff4500 solid;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 2vh;
+    margin-bottom: 2vh;
+}
+
+.post-info1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-info2 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2vh;
+    justify-content: space-between;
+}
+
+.post-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2vh;
+}
+
+/* Estilo para os botões de editar e excluir */
+.addpost-post-container button {
+    width: 20vh;
+    padding: 8px;
+    font-size: 14px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addpos-post-container button:hover {
+    background-color: #555;
+}
+
+/* Linha de separação entre os posts */
+hr {
+    margin-top: 5%;
+    border: none;
+    border-top: 1px solid #ff000056;
+}
