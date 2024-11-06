@@ -1,6 +1,1 @@
-npm install react-icons
-npm install axios
-npm install react-router-dom
-npm install firebase
-
-npm install cookie-parser express express-session
+npm install react-icons firebase axios react-router-dom cookie-parser express express-session

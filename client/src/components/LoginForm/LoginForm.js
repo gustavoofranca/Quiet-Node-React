@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaEye } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 
@@ -13,6 +13,7 @@ const LoginComp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Novo estado para controle de visibilidade da senha
 
   const [user, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -39,6 +40,11 @@ const LoginComp = () => {
     });
     return () => verifyLogin();
   }, []);
+
+  // Função para alternar visibilidade da senha
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   // Função para salvar o username junto com email e uid no sessionStorage após o login
   async function loginUser(event) {
@@ -144,8 +150,15 @@ const LoginComp = () => {
           <div className="input-group">
             <label htmlFor="password">Senha</label>
             <div className="password-container">
-              <input type="password" placeholder="Digite uma senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <FaEye className="icon-eye" />
+              <input 
+                type={showPassword ? "text" : "password"} // Alterna entre "text" e "password"
+                placeholder="Digite uma senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash className="icon-eye" /> : <FaEye className="icon-eye" />}
+              </span>
             </div>
           </div>
 

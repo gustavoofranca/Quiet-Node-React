@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
-import { FaHome, FaSearch, FaUserCog } from 'react-icons/fa';
+import { FaHome, FaSearch, FaUserCog, FaPlusCircle } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
 import Perfil from '../../images/PerfilADM.png';
 
+import { useNavigate } from 'react-router-dom';
+
 // Bibliotecas para criação e verificação de Usuário
 import { auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 
-
 const MenuLateral = () => {
   const [user, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  
+  // Inicializa o navigate
+  const navigate = useNavigate();
 
   async function doLogout() {
     try {
-        await signOut(auth); // Faz o logout no Firebase Auth
-        setUser(false);
-        setUserInfo({});
-        sessionStorage.removeItem('userData'); // Remove os dados do usuário do sessionStorage
-        alert('Você saiu da conta com sucesso!');
+      await signOut(auth); // Faz o logout no Firebase Auth
+      setUser(false);
+      setUserInfo({});
+      sessionStorage.removeItem('userData'); // Remove os dados do usuário do sessionStorage
+      alert('Você saiu da conta com sucesso!');
+      navigate('/'); // Navega para a página de login após o logout
     } catch (error) {
-        console.error("Erro ao fazer logout:", error);
-        alert('Ocorreu um erro ao sair da conta. Tente novamente.');
+      console.error("Erro ao fazer logout:", error);
+      alert('Ocorreu um erro ao sair da conta. Tente novamente.');
     }
-}
+  }
+
+  const novoPost = () => {
+    localStorage.removeItem('userInfo');
+    navigate('/add-post'); // Navega para a página de novo post
+  };
 
   return (
     <div className="container">
@@ -38,12 +48,15 @@ const MenuLateral = () => {
       </div>
 
       <div className="lista">
-        <ul>
-          <li><FaHome className='icons' /> Home</li>
-          <li><FaSearch className='icons' /> Explorar</li>
-          <li><FaUserCog className='icons' /> Configurações</li>
-          <li><TbMessageCircleUser className='mensagem' /> Mensagens</li>
-          <li onClick={doLogout}><CiLogout className='logout' /> Sair</li>
+      <ul>
+          <li onClick={() => navigate('/home')}><FaHome className='icons' /> Home</li>
+          <li onClick={() => navigate('/explore')}><FaSearch className='icons' /> Explorar</li>
+          <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
+          <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
+          <li onClick={() => navigate('/settings')}><FaUserCog className='icons' /> Configurações</li>
+          <li className="logout" onClick={doLogout}>
+          <CiLogout className="logout-icon" /> Sair
+          </li>
         </ul>
       </div>
     </div>
