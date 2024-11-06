@@ -6,58 +6,57 @@ import './addpost_comp.css';
 
 const AddPost = () => {
     // Variáveis das informações dos Posts
-    const [proprietario, setProprietario] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [owner, setOwner] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [post, setPost] = useState([]);
     const [idPost, setIdPost] = useState('');
-    const [data, setData] = useState('');
 
     useEffect(() => {
         // Função para carregar os posts em tempo real
-        const carregarPosts = () => {
+        const loadPosts = () => {
             const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
-                let listaPost = [];
+                let postList = [];
                 snapshot.forEach((doc) => {
-                    listaPost.push({
+                    postList.push({
                         id: doc.id,
-                        proprietario: doc.data().proprietario,
-                        descricao: doc.data().descricao,
+                        owner: doc.data().owner,
+                        description: doc.data().description,
                         image: doc.data().image
                     });
                 });
-                setPost(listaPost);
+                setPost(postList);
             });
             return () => unsubscribe(); // Limpar o ouvinte ao desmontar o componente
         };
 
-        carregarPosts();
+        loadPosts();
     }, []);
 
 
     // ===== Início CRUD ==================================================
     // CREATE
-    async function adicionarPosts() {
+    async function addPost() {
         // Verifica se todos os campos estão preenchidos
-        if (!proprietario.trim() || !descricao.trim() || !image.trim()) {
-            alert('Por favor, preencha todos os campos (Título, descricao, Imagem).');
+        if (!owner.trim() || !description.trim() || !image.trim()) {
+            alert('Por favor, preencha todos os campos (Título, description, Imagem).');
             return;
         }
 
         if (idPost) {
-            editarPost(); // Se tiver ID, chama a função de edição
+            editPost(); // Se tiver ID, chama a função de edição
         }
 
         else {
             await addDoc(collection(db, 'posts'), {
-                proprietario: proprietario,
-                descricao: descricao,
+                owner: owner,
+                description: description,
                 image: image
             })
                 .then(() => {
                     alert('Cadastro realizado com sucesso!');
-                    setDescricao('');
-                    setProprietario('');
+                    setDescription('');
+                    setOwner('');
                     setImage('');
                 })
                 .catch((error) => {
@@ -67,22 +66,22 @@ const AddPost = () => {
     }
 
     // UPDATE
-    async function editarPost() {
+    async function editPost() {
         if (!idPost) {
             alert("Selecione um post para editar.");
             return;
         }
         const postEditado = doc(db, 'posts', idPost);
         await updateDoc(postEditado, {
-            proprietario: proprietario,
-            descricao: descricao,
+            owner: owner,
+            description: description,
             image: image
         })
             .then(() => {
                 alert('Post editado com sucesso!');
                 setIdPost('');
-                setProprietario('');
-                setDescricao('');
+                setOwner('');
+                setDescription('');
                 setImage('');
             })
             .catch((error) => {
@@ -91,7 +90,7 @@ const AddPost = () => {
     }
 
     // DELETE
-    async function excluirPost(id) {
+    async function deletePost(id) {
         const postExcluido = doc(db, 'posts', id);
         await deleteDoc(postExcluido)
             .then(() => {
@@ -103,10 +102,10 @@ const AddPost = () => {
     }
 
     // Função para carregar os dados do post nos inputs para edição
-    function carregarPostParaEdicao(post) {
+    function loadPostForEdit(post) {
         setIdPost(post.id);
-        setProprietario(post.proprietario);
-        setDescricao(post.descricao);
+        setOwner(post.owner);
+        setDescription(post.description);
         setImage(post.image);
     }
 
@@ -114,24 +113,24 @@ const AddPost = () => {
     return (
         <div className="posts-container">
             <label>Usuário: </label>
-            <textarea type="text" placeholder="Usuário" value={proprietario} onChange={(e) => setProprietario(e.target.value)} />
+            <textarea type="text" placeholder="Usuário" value={owner} onChange={(e) => setOwner(e.target.value)} />
 
             <label>Imagem (URL):</label>
             <textarea type="text" placeholder="URL da Imagem" value={image} onChange={(e) => setImage(e.target.value)} />
 
             <label>Descrição:</label>
-            <textarea type="text" placeholder="Descrição do Post" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
+            <textarea type="text" placeholder="Descrição do Post" value={description} onChange={(e) => setDescription(e.target.value)} />
 
-            <button onClick={adicionarPosts}>{idPost ? "Atualizar" : "Inserir"}</button>
+            <button onClick={addPost}>{idPost ? "Atualizar" : "Inserir"}</button>
 
             <ul>
                 {post.map((value) => (
                     <li className="addpost-container" key={value.id}>
-                        <span> Usuario: {value.proprietario}</span>
-                        <img className="addpost-image" src={value.image} alt={value.proprietario} />
-                        <span className='addpost-descricao'> Descricao: {value.descricao}</span>
-                        <button onClick={() => carregarPostParaEdicao(value)}>Editar</button>
-                        <button onClick={() => excluirPost(value.id)}>Excluir</button>
+                        <span> Usuario: {value.owner}</span>
+                        <img className="addpost-image" src={value.image} alt={value.owner} />
+                        <span className='addpost-description'> description: {value.description}</span>
+                        <button onClick={() => loadPostForEdit(value)}>Editar</button>
+                        <button onClick={() => deletePost(value.id)}>Excluir</button>
                     </li>
                 ))}
             </ul>

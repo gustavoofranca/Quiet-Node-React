@@ -5,60 +5,98 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 
 // Bibliotecas para criação e verificação de Usuário
-import { auth } from '../../firebaseConnection';
+import { auth, db } from '../../firebaseConnection';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-
-
+import { collection, addDoc } from "firebase/firestore";
 
 const LoginComp = () => {
 
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [usuario, setUsuario] = useState(false);
-  const [detalhesUsuario, setDetalhesUsuario] = useState({});
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+
+  const [user, setUser] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+
+  const [action, setAction] = useState('Login');
 
   // Verificação de login
   useEffect(() => {
-    const verificarLogin = onAuthStateChanged(auth, (user) => {
+    const verifyLogin = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUsuario(true);
-        setDetalhesUsuario({
+        setUser(true);
+        setUserInfo({
           uid: user.uid,
           email: user.email
         });
       } else {
-        setUsuario(false);
-        setDetalhesUsuario({});
+        setUser(false);
+        setUserInfo({});
       }
     });
-    return () => verificarLogin();
+    return () => verifyLogin();
   }, []);
 
-
-  async function logarUsuario() {
-    await signInWithEmailAndPassword(auth, email, senha)
-      .then((value) => {
-        alert('Usuário logado com sucesso!');
-        setUsuario(true);
-        setDetalhesUsuario({
-          uid: value.user.uid,
-          email: value.user.email
-        });
-        setEmail('');
-        setSenha('');
-        navigate('/home');
-      })
-      .catch(() => {
-        alert('Erro ao fazer o login!');
+  async function loginUser(event) {
+    event.preventDefault();
+    try {
+      const value = await signInWithEmailAndPassword(auth, email, password);
+      alert('Usuário logado com sucesso!');
+      setUser(true);
+      setUserInfo({
+        uid: value.user.uid,
+        email: value.user.email
       });
+      setEmail('');
+      setPassword('');
+    } catch {
+      alert('Erro ao fazer o login!');
+    }
   }
 
+  async function createUser(event) {
+    event.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert('Usuário cadastrado com sucesso!');
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      if (error.code === 'auth/weak-password') {
+        alert('Senha muito fraca!');
+      } else if (error.code === 'auth/email-already-in-use') {
+        alert('Email já cadastrado!');
+      }
+    }
+  }
 
+  async function createUserInfo(event) {
+    event.preventDefault();
+    if (!username.trim() || !email.trim() || !password.trim()) {
+      alert('Por favor, preencha todos os campos (Apelido, email e senha).');
+      return;
+    }
 
-  const navigate = useNavigate();
+    try {
+      await addDoc(collection(db, 'users'), {
+        username: username,
+        email: email,
+        password: password
+      });
+      alert('Cadastro realizado com sucesso!');
+      setUsername('');
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-
-
+  function createFinalUser(event) {
+    event.preventDefault();
+    createUserInfo(event);
+    createUser(event);
+  }
 
   return (
     <>
@@ -67,7 +105,14 @@ const LoginComp = () => {
           <img src={require('../../images/quiet-logo.png')} alt="Quiet Racing Club" className="logo" />
         </div>
 
-        <h2>Bem vindo de volta!</h2>
+        <h2>{action}</h2>
+
+        {action === "Login" ? null : (
+          <div className="input-group">
+            <label htmlFor="username">Apelido</label>
+            <input type="text" placeholder="Digite um apelido" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </div>
+        )}
 
         <form>
           <div className="input-group">
@@ -78,59 +123,32 @@ const LoginComp = () => {
           <div className="input-group">
             <label htmlFor="password">Senha</label>
             <div className="password-container">
-              <input type="password" placeholder="Digite uma senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+              <input type="password" placeholder="Digite uma senha" value={password} onChange={(e) => setPassword(e.target.value)} />
               <FaEye className="icon-eye" />
             </div>
           </div>
 
-          <button type="submit" className="btn-login" onClick={logarUsuario}>Entrar</button>
-
-          <button type="button" className="btn-google">
-            <FcGoogle className="icon-google" /> Continue com Google
-          </button>
-
-          <p className="login-footer">
-            Ainda não tem uma conta? <a href="/register">Cadastre-se</a>
-          </p>
-        </form>
-      </div>
-
-{/*======== REGISTER CONTAINER ==================================================*/}
-      <div className="register-box">
-        <div className="logo-container">
-          <img src={require('../../images/quiet-logo.png')} alt="Quiet Racing Club" className="logo" />
-        </div>
-
-        <h2>Novo por aqui?</h2>
-
-        <form>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input type="email" placeholder="Digite um email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="password">Senha</label>
-            <div className="password-container">
-              <input type="password" placeholder="Digite uma senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
-              <FaEye className="icon-eye" />
-            </div>
-          </div>
-
-          <button type="submit" className="btn-login" onClick={logarUsuario}>Entrar</button>
-
-          <button type="button" className="btn-google">
-            <FcGoogle className="icon-google" /> Continue com Google
-          </button>
-
-          <p className="login-footer">
-            Ainda não tem uma conta? <a href="/register">Cadastre-se</a>
-          </p>
+          {action === "Login" ? (
+            <>
+              <button className="btn-login" onClick={loginUser}>Entrar</button>
+              <button type="button" className="btn-google">
+                <FcGoogle className="icon-google" /> Continue com Google
+              </button>
+              <p className="login-footer">
+                Ainda não tem uma conta? <a onClick={() => { setAction('Sign Up') }}>Cadastre-se</a>
+              </p>
+            </>
+          ) : (
+            <>
+              <button className="btn-login" onClick={createFinalUser}>Cadastrar-se</button>
+              <p className="login-footer">
+                Já possui uma conta? <a onClick={() => { setAction('Login') }}>Entre</a>
+              </p>
+            </>
+          )}
         </form>
       </div>
     </>
-
-
   );
 };
 

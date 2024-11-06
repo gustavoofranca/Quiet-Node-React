@@ -41,7 +41,7 @@
 .post-image {
     max-width: 100%;
     height: 480px;
-    object-fit: cover;
+    object-fit:contain;
     /* Mantém o aspecto da imagem sem distorção */
     border-radius: 8px;
     /* Bordas arredondadas, opcional */

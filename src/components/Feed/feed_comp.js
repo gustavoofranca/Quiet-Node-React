@@ -55,109 +55,31 @@ const Feed = () => {
 
   const navigate = useNavigate();
 
-  // Variáveis das informações dos Posts
-  const [proprietario, setProprietario] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [image, setImage] = useState('');
+
+
+  
   const [post, setPost] = useState([]);
-  const [idPost, setIdPost] = useState('');
 
   useEffect(() => {
     // Função para carregar os posts em tempo real
-    const carregarPosts = () => {
+    const loadPosts = () => {
       const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
-        let listaPost = [];
+        let postList = [];
         snapshot.forEach((doc) => {
-          listaPost.push({
+          postList.push({
             id: doc.id,
-            proprietario: doc.data().proprietario,
-            descricao: doc.data().descricao,
+            owner: doc.data().owner,
+            description: doc.data().description,
             image: doc.data().image
           });
         });
-        setPost(listaPost);
+        setPost(postList);
       });
       return () => unsubscribe(); // Limpar o ouvinte ao desmontar o componente
     };
 
-    carregarPosts();
+    loadPosts();
   }, []);
-
-
-  // ===== Início CRUD ==================================================
-  // CREATE
-  async function adicionarPosts() {
-    // Verifica se todos os campos estão preenchidos
-    if (!proprietario.trim() || !descricao.trim() || !image.trim()) {
-      alert('Por favor, preencha todos os campos (Título, descricao, Imagem).');
-      return;
-    }
-
-    if (idPost) {
-      editarPost(); // Se tiver ID, chama a função de edição
-    }
-
-    else {
-      await addDoc(collection(db, 'posts'), {
-        proprietario: proprietario,
-        descricao: descricao,
-        image: image
-      })
-        .then(() => {
-          alert('Cadastro realizado com sucesso!');
-          setDescricao('');
-          setProprietario('');
-          setImage('');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }
-
-  // UPDATE
-  async function editarPost() {
-    if (!idPost) {
-      alert("Selecione um post para editar.");
-      return;
-    }
-    const postEditado = doc(db, 'posts', idPost);
-    await updateDoc(postEditado, {
-      proprietario: proprietario,
-      descricao: descricao,
-      image: image
-    })
-      .then(() => {
-        alert('Post editado com sucesso!');
-        setIdPost('');
-        setProprietario('');
-        setDescricao('');
-        setImage('');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  // DELETE
-  async function excluirPost(id) {
-    const postExcluido = doc(db, 'posts', id);
-    await deleteDoc(postExcluido)
-      .then(() => {
-        alert('Post excluído com sucesso!');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  // Função para carregar os dados do post nos inputs para edição
-  function carregarPostParaEdicao(post) {
-    setIdPost(post.id);
-    setProprietario(post.proprietario);
-    setDescricao(post.descricao);
-    setImage(post.image);
-  }
 
 
   return (
@@ -165,9 +87,9 @@ const Feed = () => {
       <ul>
         {post.map((value) => (
           <li className="post-container" key={value.id}>
-            <strong className='post-proprietario'> {value.proprietario}</strong>
-            <img className="post-image" src={value.image} alt={value.proprietario} />
-            <p className='post-descricao'><strong>{value.proprietario}</strong> {value.descricao}</p>
+            <strong className='post-owner'> {value.owner}</strong>
+            <img className="post-image" src={value.image} alt={value.owner} />
+            <p className='post-description'><strong>{value.owner}</strong> {value.description}</p>
             <hr></hr>
           </li>
         ))}
