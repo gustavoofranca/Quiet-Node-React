@@ -10,7 +10,6 @@
     left: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .container::after {
@@ -54,7 +53,9 @@
 }
 
 .lista {
+    flex: 1; /* Expande para preencher o espaço restante */
     text-align: left;
+    margin-bottom: 1.5rem;
 }
 
 .lista ul {
@@ -95,10 +96,6 @@
     width: 30px;
 }
 
-/* Estilo específico para o botão de Sair */
-.logout-container {
-    margin-top: auto; /* Empurra o botão de Sair para o final da sidebar */
-}
 
 .lista ul li.logout {
     color: #FF0000;
@@ -110,8 +107,10 @@
 
 .logout-icon {
     margin-right: 0.6rem;
-    width: 35px;
+    width: 20px;
+    height: 20px;
     color: #FF0000;
+    stroke-width: 2;
 }
 
 /* Efeito hover no botão de Sair */

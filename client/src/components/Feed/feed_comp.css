@@ -2,7 +2,8 @@
     max-width: 50%;
     margin-left: 20%;
     padding: 2%;
-    color: #fff;
+    color: #171717;
+    overflow-y: auto;
 }
 
 .feed-post-container {
@@ -20,6 +21,7 @@
     border-radius: 8px;
     margin-top: 1%;
     margin-bottom: 1%;
+    background-color: #0f0f0f;
 }
 
 .post-description {
@@ -31,3 +33,5 @@ hr {
     margin-top: 5%;
     border-color: #ff000056;
 }
+
+  

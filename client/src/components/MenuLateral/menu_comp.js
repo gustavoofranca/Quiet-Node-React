@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaHome, FaSearch, FaUserCog, FaPlusCircle } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
@@ -11,12 +11,20 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 
-const MenuLateral = () => {
+const MenuLateral = ({ setModalOpen }) => { // Recebe 'setModalOpen' do componente pai
   const [user, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-  
+
   // Inicializa o navigate
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem('userData');
+    if (storedUserData) {
+      setUser(true);
+      setUserInfo(JSON.parse(storedUserData));
+    }
+  }, []);
 
   async function doLogout() {
     try {
@@ -33,14 +41,13 @@ const MenuLateral = () => {
   }
 
   const novoPost = () => {
-    localStorage.removeItem('userInfo');
-    navigate('/add-post'); // Navega para a página de novo post
+    setModalOpen(true); // Chama a função para abrir o modal no componente pai
   };
 
   return (
     <div className="container">
       <img src={Perfil} alt="Perfil" className="img-perfil" />
-      <p className="username">@demon.rs3</p>
+      <p className="username">{userInfo.username || "@demon.rs3"}</p>
 
       <div className="follow-info">
         <p>434.4k<br />Seguidores</p>
@@ -48,14 +55,21 @@ const MenuLateral = () => {
       </div>
 
       <div className="lista">
-      <ul>
+        <ul>
           <li onClick={() => navigate('/home')}><FaHome className='icons' /> Home</li>
           <li onClick={() => navigate('/explore')}><FaSearch className='icons' /> Explorar</li>
           <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
           <li onClick={() => navigate('/settings')}><FaUserCog className='icons' /> Configurações</li>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <li className="logout" onClick={doLogout}>
-          <CiLogout className="logout-icon" /> Sair
+            <CiLogout className="logout-icon" /> Sair
           </li>
         </ul>
       </div>
