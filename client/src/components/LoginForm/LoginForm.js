@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 
@@ -9,16 +11,14 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
 const LoginComp = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [userImage, setUserImage] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Novo estado para controle de visibilidade da senha
+  const [showPassword, setShowPassword] = useState(false);
 
   const [user, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
-
   const [action, setAction] = useState('Login');
 
   // Verificação de login
@@ -31,7 +31,6 @@ const LoginComp = () => {
           email: user.email
         };
         setUserInfo(userData);
-        // Salva informações no sessionStorage
         sessionStorage.setItem('userData', JSON.stringify(userData));
       } else {
         setUser(false);
@@ -42,19 +41,16 @@ const LoginComp = () => {
     return () => verifyLogin();
   }, []);
 
-  // Função para alternar visibilidade da senha
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  // Função para salvar o username junto com email e uid no sessionStorage após o login
   async function loginUser(event) {
     event.preventDefault();
     try {
       const value = await signInWithEmailAndPassword(auth, email, password);
-      alert('Usuário logado com sucesso!');
+      toast.success('Usuário logado com sucesso!', { className: 'toast-success' });
 
-      // Busca o usuário na coleção "users" para obter o username
       const querySnapshot = await getDocs(collection(db, 'users'));
       const userDoc = querySnapshot.docs.find(doc => doc.data().email === email);
 
@@ -62,12 +58,12 @@ const LoginComp = () => {
         const userData = {
           uid: value.user.uid,
           email: value.user.email,
-          username: userDoc.data().username, // adiciona o username recuperado
+          username: userDoc.data().username,
           userImage: userDoc.data().userImage || 'https://images.unsplash.com/photo-1664548726438-8ca4728829b1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         };
         setUser(true);
         setUserInfo(userData);
-        sessionStorage.setItem('userData', JSON.stringify(userData)); // Salva todos os dados no sessionStorage
+        sessionStorage.setItem('userData', JSON.stringify(userData));
       } else {
         console.log("Erro: Usuário não encontrado na coleção 'users'.");
       }
@@ -75,36 +71,36 @@ const LoginComp = () => {
       setEmail('');
       setPassword('');
     } catch {
-      alert('Erro ao fazer o login!');
+      toast.error('Erro ao fazer o login!', { className: 'toast-error' });
     }
   }
 
   async function createUser(event) {
     event.preventDefault();
     if (!email.trim() || !password.trim()) {
-      alert('Por favor, preencha o email e a senha.');
-      return null; // Retorna null se os campos estiverem vazios
+      toast.warn('Por favor, preencha o email e a senha.', { className: 'toast-warn' });
+      return null;
     }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const uid = userCredential.user.uid; // Obtém o uid do usuário criado
+      const uid = userCredential.user.uid;
       setEmail('');
       setPassword('');
-      return uid; // Retorna o uid em caso de sucesso
+      return uid;
     } catch (error) {
       if (error.code === 'auth/weak-password') {
-        alert('Senha muito fraca!');
+        toast.error('Senha muito fraca!', { className: 'toast-error' });
       } else if (error.code === 'auth/email-already-in-use') {
-        alert('Email já cadastrado!');
+        toast.error('Email já cadastrado!', { className: 'toast-error' });
       }
-      return null; // Retorna null em caso de erro
+      return null;
     }
   }
 
   async function createUserInfo(uid) {
     if (!username.trim()) {
-      alert('Por favor, preencha o campo Apelido.');
+      toast.warn('Por favor, preencha o campo Apelido.', { className: 'toast-warn' });
       return;
     }
 
@@ -128,22 +124,28 @@ const LoginComp = () => {
 
   async function createFinalUser(event) {
     event.preventDefault();
-
-    // Primeiro, tenta criar o usuário com createUser
     const uid = await createUser(event);
 
-    // Se createUser for bem-sucedido e uid não for null, então executa createUserInfo
     if (uid) {
       await createUserInfo(uid);
-
-      // Salva o uid, username e email no sessionStorage após as duas operações serem concluídas
       sessionStorage.setItem('userData', JSON.stringify({ uid, username, email }));
-      alert('Cadastro completo com sucesso!');
+      toast.success('Cadastro completo com sucesso!', { className: 'toast-success' });
     }
   }
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="login-box">
         <div className="logo-container">
           <img src={require('../../images/quiet-logo.png')} alt="Quiet Racing Club" className="logo" />
@@ -168,7 +170,7 @@ const LoginComp = () => {
             <label htmlFor="password">Senha</label>
             <div className="password-container">
               <input
-                type={showPassword ? "text" : "password"} // Alterna entre "text" e "password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Digite uma senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
