@@ -166,7 +166,7 @@ const AddPost = ({ isOpen, closeModal }) => {
                         onChange={(e) => setDescription(e.target.value)}
                     />
 
-                    <button onClick={addPost}>{idPost ? "Atualizar" : "Inserir"}</button>
+                    <button className='addpost-form-button' onClick={addPost}>{idPost ? "Atualizar" : "Inserir"}</button>
                 </div>
 
                 <ul className="posts-container">

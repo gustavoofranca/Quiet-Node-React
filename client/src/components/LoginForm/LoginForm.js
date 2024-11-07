@@ -13,10 +13,11 @@ const LoginComp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [userImage, setUserImage] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Novo estado para controle de visibilidade da senha
 
   const [user, setUser] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState([]);
 
   const [action, setAction] = useState('Login');
 
@@ -34,7 +35,7 @@ const LoginComp = () => {
         sessionStorage.setItem('userData', JSON.stringify(userData));
       } else {
         setUser(false);
-        setUserInfo({});
+        setUserInfo([]);
         sessionStorage.removeItem('userData');
       }
     });
@@ -61,7 +62,8 @@ const LoginComp = () => {
         const userData = {
           uid: value.user.uid,
           email: value.user.email,
-          username: userDoc.data().username // adiciona o username recuperado
+          username: userDoc.data().username, // adiciona o username recuperado
+          userImage: userDoc.data().userImage || 'https://images.unsplash.com/photo-1664548726438-8ca4728829b1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         };
         setUser(true);
         setUserInfo(userData);
@@ -79,50 +81,65 @@ const LoginComp = () => {
 
   async function createUser(event) {
     event.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      alert('Por favor, preencha o email e a senha.');
+      return null; // Retorna null se os campos estiverem vazios
+    }
+
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert('Usuário cadastrado com sucesso!');
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = userCredential.user.uid; // Obtém o uid do usuário criado
       setEmail('');
       setPassword('');
+      return uid; // Retorna o uid em caso de sucesso
     } catch (error) {
       if (error.code === 'auth/weak-password') {
         alert('Senha muito fraca!');
       } else if (error.code === 'auth/email-already-in-use') {
         alert('Email já cadastrado!');
       }
+      return null; // Retorna null em caso de erro
     }
   }
 
-  async function createUserInfo(event) {
-    event.preventDefault();
-    if (!username.trim() || !email.trim() || !password.trim()) {
-      alert('Por favor, preencha todos os campos (Apelido, email e senha).');
+  async function createUserInfo(uid) {
+    if (!username.trim()) {
+      alert('Por favor, preencha o campo Apelido.');
       return;
     }
 
     try {
       await addDoc(collection(db, 'users'), {
+        uid: uid,
         username: username,
+        userImage: 'https://images.unsplash.com/photo-1664548726438-8ca4728829b1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         email: email,
         password: password
       });
 
-      alert('Cadastro realizado com sucesso!');
       setUsername('');
+      setUserImage('');
       setEmail('');
       setPassword('');
     } catch (error) {
-      console.log(error);
+      console.log("Erro ao salvar informações adicionais do usuário:", error);
     }
   }
 
-  // No final do cadastro, salva o username no sessionStorage
-  function createFinalUser(event) {
+  async function createFinalUser(event) {
     event.preventDefault();
-    createUserInfo(event);
-    createUser(event);
 
-    sessionStorage.setItem('userData', JSON.stringify({ username, email })); // Salva o username no sessionStorage
+    // Primeiro, tenta criar o usuário com createUser
+    const uid = await createUser(event);
+
+    // Se createUser for bem-sucedido e uid não for null, então executa createUserInfo
+    if (uid) {
+      await createUserInfo(uid);
+
+      // Salva o uid, username e email no sessionStorage após as duas operações serem concluídas
+      sessionStorage.setItem('userData', JSON.stringify({ uid, username, email }));
+      alert('Cadastro completo com sucesso!');
+    }
   }
 
   return (
@@ -150,7 +167,7 @@ const LoginComp = () => {
           <div className="input-group">
             <label htmlFor="password">Senha</label>
             <div className="password-container">
-              <input 
+              <input
                 type={showPassword ? "text" : "password"} // Alterna entre "text" e "password"
                 placeholder="Digite uma senha"
                 value={password}

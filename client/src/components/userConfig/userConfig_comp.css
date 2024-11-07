@@ -1,6 +1,154 @@
+/* Estilo principal da página */
 .userConfig-main-container {
     display: flex;
-    height: 100vh;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
     background-color: #171717;
+    min-height: 100vh;
     color: #fff;
+}
+
+/* Estilo da lista de usuários */
+.user-container {
+    list-style-type: none;
+    padding: 0;
+    max-width: 30%;
+}
+
+.user-container li {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2vh;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.userInfo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+/* Estilo da imagem do usuário */
+.user-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/* Estilo das informações do usuário */
+.userInfo {
+    color: #ccc;
+    font-size: 20px;
+}
+
+.user-username {
+    font-weight: bold;
+}
+
+.userImage-preview {
+    width: 350px;
+    height: 350px;
+    margin-top: 10px;
+    border-radius: 50%;
+}
+
+/* Estilo do botão de editar */
+.post-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.addpost-form-button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addpost-form-button:hover {
+    background-color: #ff5733;
+}
+
+/* Estilo do formulário para editar usuário */
+.addpost-form {
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+}
+
+.addpost-form label {
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 8px;
+}
+
+.addpost-form input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.file-input-container {
+    position: relative;
+    margin-top: 10px;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 10px;
+    background-color: #ff4500;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.file-input {
+    display: none;
+}
+
+.image-preview {
+    margin-top: 10px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    background-color: #222;
+}
+
+/* Estilo do botão de salvar */
+.addpost-form-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.addpost-form-button:hover {
+    background-color: #ff5733;
 }
