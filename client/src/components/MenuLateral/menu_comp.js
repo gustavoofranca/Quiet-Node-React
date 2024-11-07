@@ -12,7 +12,7 @@ import { auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 
 const MenuLateral = ({ setModalOpen }) => { // Recebe 'setModalOpen' do componente pai
-  const [user, setUser] = useState(false);
+  const [, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
   // Inicializa o navigate
