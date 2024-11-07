@@ -13,7 +13,7 @@ const Home = () => {
       <div className="main-content">
         <Feed openModal={modalOpen} />
       </div>
-      {/* <AddPost isOpen={modalOpen} closeModal={() => setModalOpen(false)} /> */}
+      <AddPost isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
     </div>
   );
 };

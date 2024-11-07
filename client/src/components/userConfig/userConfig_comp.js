@@ -7,8 +7,11 @@ import './userConfig_comp.css';
 const UserConfig = () => {
 
     const [username, setUsername] = useState('');
+    const [userImage, setUserImage] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [userInfo, setUserInfo] = useState([]);
-
+    const [userID, setUserID] = useState('');
 
     useEffect(() => {
         // Tenta recuperar os dados do usuário do sessionStorage
@@ -50,22 +53,33 @@ const UserConfig = () => {
         }
     }, []);
 
+    function loadUserForEdit(user) {
+        setUserID(user.id);
+        setUserImage(user.image);
+        setUsername(user.username);
+        setEmail(user.email);
+        setPassword(user.password);
+    }
+
     async function edituser() {
-        if (!idPost) {
+        if (!userID) {
             alert("Selecione um post para editar.");
             return;
         }
-        const postEditado = doc(db, 'posts', idPost);
-        await updateDoc(postEditado, {
-            owner: owner,
-            description: description,
-            image: image
+        const userEditado = doc(db, 'posts', userID);
+        await updateDoc(userEditado, {
+            username: username,
+            userImage: userImage,
+            email: email,
+            password: password
         })
             .then(() => {
                 alert('Post editado com sucesso!');
-                setIdPost('');
-                setDescription('');
-                setImage('');
+                setUserID('');
+                setUserImage('');
+                setUsername('');
+                setEmail('');
+                setPassword('');
             })
             .catch((error) => {
                 console.log("Erro ao editar o post:", error);
