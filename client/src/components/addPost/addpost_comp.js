@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../../firebaseConnection';
 import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
-import { MdClose } from "react-icons/md"; // Importando o ícone de "X"
+import { MdClose } from "react-icons/md";
 import './addpost_comp.css';
 
 const AddPost = ({ isOpen, closeModal }) => {
     const [owner, setOwner] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
+    const [imageURL, setImageURL] = useState(''); // Novo estado para a URL da imagem
     const [post, setPost] = useState([]);
     const [idPost, setIdPost] = useState('');
     const modalRef = useRef(null);
@@ -43,8 +44,8 @@ const AddPost = ({ isOpen, closeModal }) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => setImage(reader.result);  // Converte a imagem para base64
-            reader.readAsDataURL(file);  // Lê o arquivo da imagem
+            reader.onloadend = () => setImage(reader.result);
+            reader.readAsDataURL(file);
         }
     };
 
@@ -54,24 +55,27 @@ const AddPost = ({ isOpen, closeModal }) => {
             return;
         }
 
-        if (!description.trim() || !image.trim()) {
+        if (!description.trim() || (!image.trim() && !imageURL.trim())) {
             alert('Por favor, preencha todos os campos corretamente.');
             return;
         }
 
+        const imageToSave = imageURL.trim() ? imageURL : image; // Prioriza a URL se fornecida
+
         if (idPost) {
-            editPost();
+            editPost(imageToSave);
         } else {
             await addDoc(collection(db, 'posts'), {
                 owner: owner,
                 description: description,
-                image: image
+                image: imageToSave
             })
                 .then(() => {
                     alert('Cadastro realizado com sucesso!');
                     setDescription('');
                     setImage('');
-                    closeModal(); // Fecha o modal após o post ser adicionado
+                    setImageURL('');
+                    closeModal();
                 })
                 .catch((error) => {
                     console.log("Erro ao adicionar o post:", error);
@@ -79,7 +83,7 @@ const AddPost = ({ isOpen, closeModal }) => {
         }
     }
 
-    async function editPost() {
+    async function editPost(imageToSave) {
         if (!idPost) {
             alert("Selecione um post para editar.");
             return;
@@ -88,14 +92,15 @@ const AddPost = ({ isOpen, closeModal }) => {
         await updateDoc(postEditado, {
             owner: owner,
             description: description,
-            image: image
+            image: imageToSave
         })
             .then(() => {
                 alert('Post editado com sucesso!');
                 setIdPost('');
                 setDescription('');
                 setImage('');
-                closeModal(); // Fecha o modal após a edição
+                setImageURL('');
+                closeModal();
             })
             .catch((error) => {
                 console.log("Erro ao editar o post:", error);
@@ -118,25 +123,25 @@ const AddPost = ({ isOpen, closeModal }) => {
         setOwner(post.owner);
         setDescription(post.description);
         setImage(post.image);
+        setImageURL('');
     }
 
     const handleOutsideClick = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
-            closeModal();  // Fecha o modal se o clique for fora
+            closeModal();
         }
     };
 
     useEffect(() => {
-        document.addEventListener('mousedown', handleOutsideClick);  // Detecta o clique fora do modal
-        return () => document.removeEventListener('mousedown', handleOutsideClick);  // Limpa o evento ao desmontar
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
     }, []);
 
-    if (!isOpen) return null; // Não renderiza nada se o modal não estiver aberto
+    if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
             <div className="addpost-main-container" ref={modalRef}>
-                {/* Botão de Fechar no canto superior direito */}
                 <button className="close-btn" onClick={closeModal}>
                     <MdClose size={30} />
                 </button>
@@ -144,8 +149,15 @@ const AddPost = ({ isOpen, closeModal }) => {
                 <h3>Usuário: {owner || "Desconhecido"}</h3>
 
                 <div className="addpost-form">
-                    <label>Imagem:</label>
-                    {/* Botão estilizado para escolher arquivo */}
+                    <label>Imagem (URL ou Arquivo):</label>
+                    {/* Campo de entrada para URL da imagem */}
+                    <input
+                        type="text"
+                        placeholder="URL da Imagem"
+                        value={imageURL}
+                        onChange={(e) => setImageURL(e.target.value)}
+                    />
+
                     <div className="file-input-container">
                         <label className="file-input-label">
                             Escolher Imagem
@@ -157,7 +169,9 @@ const AddPost = ({ isOpen, closeModal }) => {
                             />
                         </label>
                     </div>
-                    {image && <img src={image} alt="Imagem do Post" className="image-preview" />} {/* Exibe a imagem pré-visualizada */}
+                    
+                    {imageURL && <img src={imageURL} alt="Pré-visualização da URL" className="image-preview" />}
+                    {!imageURL && image && <img src={image} alt="Imagem do Post" className="image-preview" />}
 
                     <label>Descrição:</label>
                     <textarea
