@@ -3,37 +3,43 @@ import { FaHome, FaSearch, FaUserCog, FaPlusCircle } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
-import Perfil from '../../images/PerfilADM.png';
-
 import { useNavigate } from 'react-router-dom';
 
-// Bibliotecas para criação e verificação de Usuário
+// Importações para Firebase
+import { db } from '../../firebaseConnection';
+import { query, where, collection, onSnapshot } from "firebase/firestore";
 import { auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 
-const MenuLateral = ({ setModalOpen }) => { // Recebe 'setModalOpen' do componente pai
-  const [, setUser] = useState(false);
+const MenuLateral = ({ setModalOpen }) => {
   const [userInfo, setUserInfo] = useState({});
-
-  // Inicializa o navigate
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUserData = sessionStorage.getItem('userData');
-    if (storedUserData) {
-      setUser(true);
-      setUserInfo(JSON.parse(storedUserData));
+    // Recupera os dados do usuário do sessionStorage
+    const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
+    if (storedUserData && storedUserData.uid) {
+      const userQuery = query(
+        collection(db, 'users'),
+        where("uid", "==", storedUserData.uid)
+      );
+
+      const unsubscribe = onSnapshot(userQuery, (snapshot) => {
+        snapshot.forEach((doc) => {
+          setUserInfo(doc.data());
+        });
+      });
+
+      return () => unsubscribe();
     }
   }, []);
 
   async function doLogout() {
     try {
-      await signOut(auth); // Faz o logout no Firebase Auth
-      setUser(false);
-      setUserInfo({});
-      sessionStorage.removeItem('userData'); // Remove os dados do usuário do sessionStorage
+      await signOut(auth);
+      sessionStorage.removeItem('userData');
       alert('Você saiu da conta com sucesso!');
-      navigate('/'); // Navega para a página de login após o logout
+      navigate('/');
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
       alert('Ocorreu um erro ao sair da conta. Tente novamente.');
@@ -46,8 +52,12 @@ const MenuLateral = ({ setModalOpen }) => { // Recebe 'setModalOpen' do componen
 
   return (
     <div className="container">
-      <img src={Perfil} alt="Perfil" className="img-perfil" />
-      <p className="username">{userInfo.username || "@demon.rs3"}</p>
+      <img
+        src={userInfo.userImage}
+        alt="Perfil"
+        className="img-perfil"
+      />
+      <p className="username">{userInfo.username}</p>
 
       <div className="follow-info">
         <p>434.4k<br />Seguidores</p>

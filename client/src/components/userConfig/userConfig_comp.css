@@ -3,59 +3,70 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
-    background-color: #171717;
+    padding: 30px;
+    background-color: #1b1b1b;
     min-height: 100vh;
-    color: #fff;
+    color: #f0f0f0;
 }
 
 /* Estilo da lista de usuários */
 .user-container {
     list-style-type: none;
     padding: 0;
-    max-width: 30%;
+    margin-bottom: 40px;
+    max-width: 350px;
+    width: 100%;
 }
 
 .user-container li {
     display: flex;
-    justify-content: flex-start;
-    gap: 2vh;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #2c2c2c;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-container li:hover {
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo da imagem do usuário */
+.user-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .userInfo-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
 }
 
-
-/* Estilo da imagem do usuário */
-.user-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-/* Estilo das informações do usuário */
 .userInfo {
     color: #ccc;
-    font-size: 20px;
+    font-size: 16px;
+    margin-bottom: 4px;
 }
 
 .user-username {
     font-weight: bold;
+    font-size: 18px;
+    color: #fff;
 }
 
+/* Estilo da pré-visualização de imagem */
 .userImage-preview {
-    width: 350px;
-    height: 350px;
-    margin-top: 10px;
+    width: 200px;
+    height: 200px;
+    margin-top: 15px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #444;
 }
 
 /* Estilo do botão de editar */
@@ -63,50 +74,43 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-end;
 }
 
 .addpost-form-button {
-    padding: 10px;
+    padding: 10px 18px;
     font-size: 16px;
     background-color: #ff4500;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .addpost-form-button:hover {
     background-color: #ff5733;
+    transform: translateY(-2px);
 }
 
 /* Estilo do formulário para editar usuário */
 .addpost-form {
     display: flex;
-    flex-direction: row;
-    background-color: #222;
-    border-radius: 8px;
-    padding: 20px;
-    width: 100%;
-    margin: 5vh;
-}
-
-
-.userConfig-form-container {
-    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    min-height: 100vh;
-    color: #fff;
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
-
 
 .addpost-form label {
-    font-size: 16px;
-    color: #ccc;
-    margin-bottom: 8px;
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .addpost-form input {
@@ -114,11 +118,18 @@
     font-size: 14px;
     border: 1px solid #555;
     border-radius: 5px;
-    background-color: #333;
+    background-color: #3b3b3b;
     color: #fff;
     margin-bottom: 20px;
+    transition: border-color 0.3s;
 }
 
+.addpost-form input:focus {
+    border-color: #ff4500;
+    outline: none;
+}
+
+/* Estilo do campo de upload de arquivo e URL da imagem */
 .file-input-container {
     position: relative;
     margin-top: 10px;
@@ -126,40 +137,40 @@
 
 .file-input-label {
     display: inline-block;
-    padding: 10px;
+    padding: 10px 15px;
     background-color: #ff4500;
-    color: white;
+    color: #fff;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    transition: background-color 0.3s;
+}
+
+.file-input-label:hover {
+    background-color: #ff5733;
 }
 
 .file-input {
     display: none;
 }
 
+.image-url-input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #3b3b3b;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+}
+
+/* Estilo da pré-visualização de imagem */
 .image-preview {
-    margin-top: 10px;
+    margin-top: 15px;
     max-width: 100%;
     height: auto;
     border-radius: 5px;
     background-color: #222;
 }
 
-/* Estilo do botão de salvar */
-.addpost-form-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-}
-
-.addpost-form-button:hover {
-    background-color: #ff5733;
-}

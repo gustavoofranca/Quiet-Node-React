@@ -67,9 +67,10 @@ const UserConfig = () => {
             return;
         }
         const userEditado = doc(db, 'users', userID);
+
         await updateDoc(userEditado, {
             username: username,
-            userImage: userImage || imageUrl, // Usa a imagem de arquivo ou a URL
+            userImage: imageUrl || userImage, // Usa a URL da imagem ou, se vazia, a imagem carregada
             email: email,
             password: password
         })
@@ -122,7 +123,6 @@ const UserConfig = () => {
                     <div>
                         <label>Imagem:</label>
                         <div className="input-group">
-                            <label htmlFor="imageUrl">URL da Imagem</label>
                             <input
                                 type="text"
                                 placeholder="Digite a URL da imagem"
@@ -142,9 +142,13 @@ const UserConfig = () => {
                             </label>
                         </div>
 
-                        {userImage && <img src={userImage} alt="Pré-visualização" className="userImage-preview" />}
-                        {imageUrl && <img src={imageUrl} alt="Pré-visualização" className="userImage-preview" />}
+                        {imageUrl ? (
+                            <img src={imageUrl} alt="Pré-visualização" className="userImage-preview" />
+                        ) : (
+                            userImage && <img src={userImage} alt="Pré-visualização" className="userImage-preview" />
+                        )}
                     </div>
+                    
                     <div className='userConfig-form-container'>
                         <div className="input-group">
                             <label htmlFor="username">Apelido</label>
