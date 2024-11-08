@@ -60,7 +60,7 @@ const MenuLateral = ({ setModalOpen }) => { // Recebe 'setModalOpen' do componen
           <li onClick={() => navigate('/explore')}><FaSearch className='icons' /> Explorar</li>
           <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
-          <li onClick={() => navigate('/settings')}><FaUserCog className='icons' /> Configurações</li>
+          <li onClick={() => navigate('/user-config')}><FaUserCog className='icons' /> Configurações</li>
           <br />
           <br />
           <br />

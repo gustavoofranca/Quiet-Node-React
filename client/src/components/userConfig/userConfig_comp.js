@@ -6,27 +6,24 @@ import { db } from '../../firebaseConnection';
 import { query, where, doc, collection, addDoc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import './userConfig_comp.css';
 
-
 const UserConfig = () => {
-
     const [username, setUsername] = useState('');
     const [userImage, setUserImage] = useState('');
+    const [imageUrl, setImageUrl] = useState(''); // Novo estado para a URL da imagem
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userInfo, setUserInfo] = useState([]);
     const [userID, setUserID] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // Novo estado para controle de visibilidade da senha
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        // Tenta recuperar os dados do usuário do sessionStorage
+        // Recupera os dados do usuário do sessionStorage
         const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
         if (storedUserData && storedUserData.uid) {
-
-            // Função para carregar os dados do usuário com base no username
             const loadUsers = () => {
                 const userQuery = query(
                     collection(db, 'users'),
-                    where("uid", "==", storedUserData.uid) // Usa o username diretamente
+                    where("uid", "==", storedUserData.uid)
                 );
 
                 const unsubscribe = onSnapshot(userQuery, (snapshot) => {
@@ -40,16 +37,13 @@ const UserConfig = () => {
                             userImage: doc.data().userImage
                         });
                     });
-                    setUserInfo(userList); // Define o estado com o usuário filtrado
+                    setUserInfo(userList);
                 });
 
-                return unsubscribe; // Limpar o ouvinte ao desmontar o componente
+                return unsubscribe;
             };
 
-            // Chama a função para carregar os dados do usuário
             const unsubscribe = loadUsers();
-
-            // Limpar o ouvinte ao desmontar o componente
             return () => {
                 if (unsubscribe) unsubscribe();
             };
@@ -61,13 +55,12 @@ const UserConfig = () => {
     function loadUserForEdit(user) {
         setUserID(user.id);
         setUserImage(user.userImage);
+        setImageUrl(''); // Limpa o campo da URL ao carregar um usuário para edição
         setUsername(user.username);
         setEmail(user.email);
         setPassword(user.password);
     }
 
-
-    // =================================================================
     async function edituser() {
         if (!userID) {
             alert("Selecione um usuário para editar.");
@@ -76,7 +69,7 @@ const UserConfig = () => {
         const userEditado = doc(db, 'users', userID);
         await updateDoc(userEditado, {
             username: username,
-            userImage: userImage,
+            userImage: userImage || imageUrl, // Usa a imagem de arquivo ou a URL
             email: email,
             password: password
         })
@@ -84,6 +77,7 @@ const UserConfig = () => {
                 alert('Usuário editado com sucesso!');
                 setUserID('');
                 setUserImage('');
+                setImageUrl(''); // Limpa o campo da URL após a atualização
                 setUsername('');
                 setEmail('');
                 setPassword('');
@@ -93,18 +87,15 @@ const UserConfig = () => {
             });
     }
 
-    // =================================================================
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => setUserImage(reader.result);  // Converte a imagem para base64
-            reader.readAsDataURL(file);  // Lê o arquivo da imagem
+            reader.onloadend = () => setUserImage(reader.result);
+            reader.readAsDataURL(file);
         }
     };
 
-    // =================================================================
-    // Função para alternar visibilidade da senha
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
     };
@@ -112,7 +103,6 @@ const UserConfig = () => {
     return (
         <>
             <div className='userConfig-main-container'>
-
                 <ul className="user-container">
                     {userInfo.map((value) => (
                         <li key={value.id}>
@@ -124,46 +114,78 @@ const UserConfig = () => {
                                     <button className='addpost-form-button' onClick={() => loadUserForEdit(value)}>Editar</button>
                                 </div>
                             </div>
-
                         </li>
                     ))}
                 </ul>
 
                 <div className="addpost-form">
-                    <label>Imagem:</label>
-                    {/* Botão estilizado para escolher arquivo */}
-                    <div className="file-input-container">
-                        <label className="file-input-label">
-                            Escolher Imagem
+                    <div>
+                        <label>Imagem:</label>
+                        <div className="input-group">
+                            <label htmlFor="imageUrl">URL da Imagem</label>
                             <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                className="file-input"
+                                type="text"
+                                placeholder="Digite a URL da imagem"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
                             />
-                        </label>
-                    </div>
-                    {userImage && <img src={userImage} alt="Imagem do Post" className="userImage-preview" />} {/* Exibe a imagem pré-visualizada */}
+                        </div>
+                        <div className="file-input-container">
+                            <label className="file-input-label">
+                                Escolher Imagem
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="file-input"
+                                />
+                            </label>
+                        </div>
 
-                    <div className="input-group">
-                        <label htmlFor="username">Apelido</label>
-                        <input type="text" placeholder="Digite um apelido" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        {userImage && <img src={userImage} alt="Pré-visualização" className="userImage-preview" />}
+                        {imageUrl && <img src={imageUrl} alt="Pré-visualização" className="userImage-preview" />}
                     </div>
+                    <div className='userConfig-form-container'>
+                        <div className="input-group">
+                            <label htmlFor="username">Apelido</label>
+                            <input
+                                type="text"
+                                placeholder="Digite um apelido"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
 
-                    <button className='addpost-form-button' onClick={edituser}>{userID ? "Atualizar" : "Sem usuário selecionado"}</button>
-                </div >
+                        <div className="input-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                placeholder="Digite um email"
+                                value={email}
+                                readOnly
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="password">Senha</label>
+                            <div className="password-container">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Digite uma senha"
+                                    value={password}
+                                    readOnly
+                                />
+                                <span onClick={togglePasswordVisibility}>
+                                    {showPassword ? <FaEyeSlash className="icon-eye" /> : <FaEye className="icon-eye" />}
+                                </span>
+                            </div>
+                        </div>
+                        <button className='addpost-form-button' onClick={edituser}>{userID ? "Atualizar" : "Sem usuário selecionado"}</button>
+                    </div>
+                </div>
             </div>
         </>
     );
-
-
-
-
-
-
-
-
-
 }
 
 export default UserConfig;

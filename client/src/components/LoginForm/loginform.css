@@ -140,40 +140,40 @@ input:focus {
 
 .Toastify__toast-container {
     font-family: 'Poppins', sans-serif;
-  }
-  
+}
 
-  .toast-success {
-    background-color: #222 !important;
-    color: #fff !important;
-    font-weight: bold;
-    border-radius: 8px;
-  }
-  
- 
-  .toast-error {
-    background-color: #222 !important;
-    color: #fff !important;
-    font-weight: bold;
-    border-radius: 8px;
-  }
-  .toast-warn {
-    background-color: #222 !important;
-    color: #fff !important;
-    font-weight: bold;
-    border-radius: 8px;
-  }
-  
 
-  .toast-info {
+.toast-success {
+    background-color: #222 !important;
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+
+.toast-error {
+    background-color: #222 !important;
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.toast-warn {
+    background-color: #222 !important;
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+
+.toast-info {
     background-color: #2196f3 !important;
     color: #fff !important;
     font-weight: bold;
     border-radius: 8px;
-  }
-  
+}
 
-  .Toastify__close-button {
+
+.Toastify__close-button {
     color: #fff !important;
-  }
-  
+}
