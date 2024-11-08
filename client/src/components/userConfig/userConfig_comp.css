@@ -1,8 +1,9 @@
 /* Estilo principal da página */
 .userConfig-main-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
+    gap: 10vh;
     padding: 30px;
     background-color: #1b1b1b;
     min-height: 100vh;
@@ -174,3 +175,9 @@
     background-color: #222;
 }
 
+.userConfig-warning {
+    color: #ff4500;
+    font-size: 12px;
+    margin-top: 15px;
+    text-align: center;
+}

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { FcGoogle } from "react-icons/fc";
 
-import { db } from '../../firebaseConnection';
-import { query, where, doc, collection, addDoc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
+import { db, auth } from '../../firebaseConnection';
+import { signOut } from "firebase/auth";
+import { query, where, doc, collection, updateDoc, onSnapshot } from "firebase/firestore";
 import './userConfig_comp.css';
 
 const UserConfig = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [userImage, setUserImage] = useState('');
     const [imageUrl, setImageUrl] = useState(''); // Novo estado para a URL da imagem
@@ -68,26 +70,38 @@ const UserConfig = () => {
         }
         const userEditado = doc(db, 'users', userID);
 
-        await updateDoc(userEditado, {
-            username: username,
-            userImage: imageUrl || userImage, // Usa a URL da imagem ou, se vazia, a imagem carregada
-            email: email,
-            password: password
-        })
-            .then(() => {
-                alert('Usuário editado com sucesso!');
-                setUserID('');
-                setUserImage('');
-                setImageUrl(''); // Limpa o campo da URL após a atualização
-                setUsername('');
-                setEmail('');
-                setPassword('');
-            })
-            .catch((error) => {
-                console.log("Erro ao editar o usuário:", error);
+        try {
+            // Atualize o documento no Firestore
+            await updateDoc(userEditado, {
+                username: username,
+                userImage: imageUrl || userImage, // Usa a URL da imagem ou, se vazia, a imagem carregada
+                email: email,
+                password: password
             });
-    }
 
+            // Atualize os dados do usuário no sessionStorage
+            const updatedUserData = {
+                uid: userID,
+                username: username,
+                userImage: imageUrl || userImage,
+                email: email,
+                password: password
+            };
+            sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
+
+            alert('Usuário editado com sucesso!');
+            setUserID('');
+            setUserImage('');
+            setImageUrl(''); // Limpa o campo da URL após a atualização
+            setUsername('');
+            setEmail('');
+            setPassword('');
+            navigate('/');
+            doLogout();
+        } catch (error) {
+            console.log("Erro ao editar o usuário:", error);
+        }
+    }
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -100,6 +114,18 @@ const UserConfig = () => {
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
     };
+
+    async function doLogout() {
+        try {
+            await signOut(auth);
+            sessionStorage.removeItem('userData');
+            alert('Você saiu da conta com sucesso!');
+            navigate('/');
+        } catch (error) {
+            console.error("Erro ao fazer logout:", error);
+            alert('Ocorreu um erro ao sair da conta. Tente novamente.');
+        }
+    }
 
     return (
         <>
@@ -148,7 +174,7 @@ const UserConfig = () => {
                             userImage && <img src={userImage} alt="Pré-visualização" className="userImage-preview" />
                         )}
                     </div>
-                    
+
                     <div className='userConfig-form-container'>
                         <div className="input-group">
                             <label htmlFor="username">Apelido</label>
@@ -185,6 +211,7 @@ const UserConfig = () => {
                             </div>
                         </div>
                         <button className='addpost-form-button' onClick={edituser}>{userID ? "Atualizar" : "Sem usuário selecionado"}</button>
+                        <p className='userConfig-warning'>Obs: Você será redireciona à página de login ao atualizar.</p>
                     </div>
                 </div>
             </div>
