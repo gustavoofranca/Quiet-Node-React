@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom';
 
 // Bibliotecas para criação e verificação de Usuário
 import { auth, db } from '../../firebaseConnection';
@@ -16,6 +17,7 @@ const LoginComp = () => {
   const [username, setUsername] = useState('');
   const [userImage, setUserImage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const [user, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
@@ -64,6 +66,8 @@ const LoginComp = () => {
         setUser(true);
         setUserInfo(userData);
         sessionStorage.setItem('userData', JSON.stringify(userData));
+        // Redireciona para a página "home" após o login bem-sucedido
+        navigate('/home');
       } else {
         console.log("Erro: Usuário não encontrado na coleção 'users'.");
       }
