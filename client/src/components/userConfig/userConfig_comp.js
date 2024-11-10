@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
 import { db, auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 import { query, where, doc, collection, updateDoc, onSnapshot } from "firebase/firestore";
@@ -11,7 +10,7 @@ const UserConfig = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [userImage, setUserImage] = useState('');
-    const [imageUrl, setImageUrl] = useState(''); // Novo estado para a URL da imagem
+    const [imageUrl, setImageUrl] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userInfo, setUserInfo] = useState([]);
@@ -19,7 +18,6 @@ const UserConfig = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        // Recupera os dados do usuário do sessionStorage
         const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
         if (storedUserData && storedUserData.uid) {
             const loadUsers = () => {
@@ -57,7 +55,7 @@ const UserConfig = () => {
     function loadUserForEdit(user) {
         setUserID(user.id);
         setUserImage(user.userImage);
-        setImageUrl(''); // Limpa o campo da URL ao carregar um usuário para edição
+        setImageUrl('');
         setUsername(user.username);
         setEmail(user.email);
         setPassword(user.password);
@@ -71,15 +69,13 @@ const UserConfig = () => {
         const userEditado = doc(db, 'users', userID);
 
         try {
-            // Atualize o documento no Firestore
             await updateDoc(userEditado, {
                 username: username,
-                userImage: imageUrl || userImage, // Usa a URL da imagem ou, se vazia, a imagem carregada
+                userImage: imageUrl || userImage,
                 email: email,
                 password: password
             });
 
-            // Atualize os dados do usuário no sessionStorage
             const updatedUserData = {
                 uid: userID,
                 username: username,
@@ -92,7 +88,7 @@ const UserConfig = () => {
             alert('Usuário editado com sucesso!');
             setUserID('');
             setUserImage('');
-            setImageUrl(''); // Limpa o campo da URL após a atualização
+            setImageUrl('');
             setUsername('');
             setEmail('');
             setPassword('');
@@ -137,10 +133,8 @@ const UserConfig = () => {
                             <div className='userInfo-container'>
                                 <span className='userInfo user-username'>{value.username}</span>
                                 <span className='userInfo user-email'>{value.email}</span>
-                                <div className='post-buttons'>
-                                    <button className='addpost-form-button' onClick={() => loadUserForEdit(value)}>Editar</button>
-                                </div>
                             </div>
+                            <button className='edit-button' onClick={() => loadUserForEdit(value)}>Editar</button>
                         </li>
                     ))}
                 </ul>
@@ -157,7 +151,7 @@ const UserConfig = () => {
                             />
                         </div>
                         <div className="file-input-container">
-                            <label className="file-input-label">
+                            <label className="file-userconfig-button">
                                 Escolher Imagem
                                 <input
                                     type="file"

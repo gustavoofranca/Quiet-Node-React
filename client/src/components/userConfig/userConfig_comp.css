@@ -8,6 +8,9 @@
     background-color: #1b1b1b;
     min-height: 100vh;
     color: #f0f0f0;
+    overflow-y: auto; /* Allow vertical scrolling */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Estilo da lista de usuários */
@@ -22,42 +25,62 @@
 .user-container li {
     display: flex;
     align-items: center;
-    gap: 15px;
     padding: 15px;
     border-radius: 10px;
     background-color: #2c2c2c;
     margin-bottom: 20px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 10px #ff4500;
+    border: 2px solid #ff4500;
+    flex-direction: column;
+    position: relative;
 }
 
-.user-container li:hover {
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilo da imagem do usuário */
 .user-image {
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    align-items: left;
+    justify-content: center;
     object-fit: cover;
+    margin: 0 auto;
 }
 
 .userInfo-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+    flex-grow: 1;
+    margin-top: 10px;
 }
 
 .userInfo {
     color: #ccc;
     font-size: 16px;
-    margin-bottom: 4px;
 }
 
 .user-username {
     font-weight: bold;
     font-size: 18px;
     color: #fff;
+}
+
+.edit-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #ff4500;
+    color: #fff;
+    border: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.edit-button:hover {
+    background-color: #ff5733;
+    transform: translateY(-2px);
 }
 
 /* Estilo da pré-visualização de imagem */
@@ -70,30 +93,6 @@
     border: 2px solid #444;
 }
 
-/* Estilo do botão de editar */
-.post-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.addpost-form-button {
-    padding: 10px 18px;
-    font-size: 16px;
-    background-color: #ff4500;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.addpost-form-button:hover {
-    background-color: #ff5733;
-    transform: translateY(-2px);
-}
-
 /* Estilo do formulário para editar usuário */
 .addpost-form {
     display: flex;
@@ -103,7 +102,8 @@
     padding: 25px;
     width: 100%;
     max-width: 500px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 10px #ff4500;
+    border: 2px solid #ff4500;
 }
 
 .addpost-form label {
@@ -115,6 +115,7 @@
 }
 
 .addpost-form input {
+    width: 100%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #555;
@@ -136,7 +137,7 @@
     margin-top: 10px;
 }
 
-.file-input-label {
+.file-userconfig-button {
     display: inline-block;
     padding: 10px 15px;
     background-color: #ff4500;
@@ -147,9 +148,6 @@
     transition: background-color 0.3s;
 }
 
-.file-input-label:hover {
-    background-color: #ff5733;
-}
 
 .file-input {
     display: none;
@@ -180,4 +178,44 @@
     font-size: 12px;
     margin-top: 15px;
     text-align: center;
+}
+
+.password-container {
+    width: 100%;
+    
+}
+
+.addpost-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #3b3b3b;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.password-container input {
+    flex-grow: 1;
+    margin: 0;
+}
+
+.icon-eye {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #e50914;
+    transition: color 0.3s ease;
+    font-size: 1.2rem;
+    height: 70%;
 }
