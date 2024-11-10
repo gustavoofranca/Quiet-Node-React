@@ -59,9 +59,9 @@ label {
     cursor: pointer;
     transition: color 0.3s ease;
     font-size: 1.2rem;
-    right: 34px;
+    right: 2.313rem;
     position: relative;
-    top: 3px;
+    top: 0.5rem;
 }
 
 input {

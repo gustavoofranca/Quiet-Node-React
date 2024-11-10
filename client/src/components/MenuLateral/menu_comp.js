@@ -71,13 +71,11 @@ const MenuLateral = ({ setModalOpen }) => {
           <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
           <li onClick={() => navigate('/user-config')}><FaUserCog className='icons' /> Configurações</li>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+        </ul>
+      </div>
+
+      <div className="logout-container">
+        <ul>
           <li className="logout" onClick={doLogout}>
             <CiLogout className="logout-icon" /> Sair
           </li>

@@ -2,13 +2,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../../firebaseConnection';
 import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { MdClose } from "react-icons/md";
+import { TiPencil } from "react-icons/ti"; // Ícone de editar
+import { FaRegTrashAlt } from "react-icons/fa"; // Ícone de excluir
 import './addpost_comp.css';
 
 const AddPost = ({ isOpen, closeModal }) => {
     const [owner, setOwner] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const [imageURL, setImageURL] = useState(''); // Novo estado para a URL da imagem
+    const [imageURL, setImageURL] = useState('');
     const [post, setPost] = useState([]);
     const [idPost, setIdPost] = useState('');
     const modalRef = useRef(null);
@@ -60,7 +62,7 @@ const AddPost = ({ isOpen, closeModal }) => {
             return;
         }
 
-        const imageToSave = imageURL.trim() ? imageURL : image; // Prioriza a URL se fornecida
+        const imageToSave = imageURL.trim() ? imageURL : image;
 
         if (idPost) {
             editPost(imageToSave);
@@ -146,33 +148,28 @@ const AddPost = ({ isOpen, closeModal }) => {
                     <MdClose size={30} />
                 </button>
 
-                <h3>Usuário: {owner || "Desconhecido"}</h3>
+                <h3 className='username-modal'>Usuário: {owner || "Desconhecido"}</h3>
 
                 <div className="addpost-form">
                     <label>Imagem (URL ou Arquivo):</label>
-                    {/* Campo de entrada para URL da imagem */}
                     <input
                         type="text"
                         placeholder="URL da Imagem"
                         value={imageURL}
                         onChange={(e) => setImageURL(e.target.value)}
                     />
-
                     <div className="file-input-container">
                         <label className="file-input-label">
-                            Escolher Imagem
+                            Selecione uma Imagem
                             <input
                                 type="file"
-                                accept="image/*"
-                                onChange={handleImageChange}
                                 className="file-input"
+                                onChange={handleImageChange}
                             />
                         </label>
                     </div>
-                    
-                    {imageURL && <img src={imageURL} alt="Pré-visualização da URL" className="image-preview" />}
-                    {!imageURL && image && <img src={image} alt="Imagem do Post" className="image-preview" />}
 
+                    {image && <img src={image} alt="Preview" className="image-preview" />}
                     <label>Descrição:</label>
                     <textarea
                         placeholder="Descrição do Post"
@@ -180,26 +177,30 @@ const AddPost = ({ isOpen, closeModal }) => {
                         onChange={(e) => setDescription(e.target.value)}
                     />
 
-                    <button className='addpost-form-button' onClick={addPost}>{idPost ? "Atualizar" : "Inserir"}</button>
+                    <button className="addpost-form-button" onClick={addPost}>Salvar</button>
                 </div>
 
-                <ul className="posts-container">
-                    {post.map((value) => (
-                        <li className="addpost-post-container" key={value.id}>
-                            <div className='post-info1'>
-                                <span>Usuário: {value.owner}</span>
-                                <img className="post-image" src={value.image} alt={value.owner} />
-                            </div>
-                            <div className='post-info2'>
-                                <span className='post-description'>Descrição: {value.description}</span>
-                                <div className='post-buttons'>
-                                    <button onClick={() => loadPostForEdit(value)}>Editar</button>
-                                    <button onClick={() => deletePost(value.id)}>Excluir</button>
+                <h4 className='modal-list'>Lista de Posts</h4>
+                <div className="posts-container">
+                    {post.map((post) => (
+                        <div key={post.id} className="addpost-post-container">
+                            <div className="post-image-container">
+                                <img src={post.image} alt="Post" />
+                                <div className="post-buttons">
+                                    <button onClick={() => loadPostForEdit(post)}>
+                                        <TiPencil />
+                                    </button>
+                                    <button onClick={() => deletePost(post.id)}>
+                                        <FaRegTrashAlt />
+                                    </button>
                                 </div>
                             </div>
-                        </li>
+                            <div className="post-info2">
+                                <p className="post-description">{post.description}</p>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         </div>
     );

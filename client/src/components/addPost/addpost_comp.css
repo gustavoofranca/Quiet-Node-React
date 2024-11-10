@@ -1,189 +1,199 @@
-/* Container principal do Modal */
-.addpost-main-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
-    /* Largura ajustada */
-    max-width: 600px;
-    /* Limitação máxima de largura */
-    max-height: 80%;
-    /* Ajusta a altura máxima */
-    background-color: #222;
-    /* Fundo escuro */
+/* Estilo do modal */
+.username-modal {
     color: #fff;
-    padding: 2%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    z-index: 1000;
-    overflow-y: auto;
-    /* Permite rolagem se necessário */
+    text-align: left;
+    margin-bottom: 10px;
 }
 
-/* Overlay do fundo (escurecimento do fundo) */
+.modal-list{
+    color: #fff;
+    text-align: left;
+    margin-top: 10px;
+}
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Fundo semi-transparente */
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 999;
-    /* Fica atrás do modal */
 }
 
-/* Estilo do formulário de adicionar post */
-.addpost-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.addpost-form label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #ccc;
-}
-
-.addpost-form textarea {
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #333;
-    color: #fff;
-    resize: none;
-    min-height: 150px;
-}
-
-.addpost-form-button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #ff4500;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 5px;
-}
-
-.addpost-form-button:hover {
-    background-color: #ff5733;
-}
-
-/* Estilo da lista de posts no modal */
-.posts-container {
-    max-height: calc(100vh - 45vh);
-    /* Limita a altura da lista de posts */
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    /* Permite rolagem se necessário */
-}
-
-/* Estilo de cada post */
-.addpost-post-container {
-    border-bottom: 2px solid #ff4500;
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 2vh;
-    margin-bottom: 2vh;
-}
-
-.post-info1 {
-    display: flex;
-    flex-direction: column;
-}
-
-.post-info2 {
-    display: flex;
-    flex-direction: column;
-    margin-left: 2vh;
-    justify-content: space-between;
-}
-
-.post-buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 2vh;
-}
-
-/* Estilo para os botões de editar e excluir */
-.addpost-post-container button {
-    width: 20vh;
-    padding: 8px;
-    font-size: 14px;
-    background-color: #444;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.addpost-post-container button:hover {
-    background-color: #555;
-}
-
-/* Linha de separação entre os posts */
-hr {
-    margin-top: 5%;
-    border: none;
-    border-top: 1px solid #ff000056;
-}
-
-.image-preview {
-    margin-top: 10px;
-    max-width: 100%;
-    background-color: #222;
-    height: auto;
-    border-radius: 5px;
-}
-
-/* Estiliza o botão de escolher arquivo */
-.file-input-container {
+/* Container principal do modal com largura ajustada */
+.addpost-main-container {
+    background: #171717;
+    border-radius: 8px;
+    padding: 20px;
+    width: 40%; /* Largura reduzida para 60% da tela */
+    max-width: 900px; /* Limite máximo de largura */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    margin-top: 10px;
-    background-color: #222;
+    max-height: 80vh; /* Limite de altura */
+    overflow-y: auto; /* Rolagem interna */
 }
 
-.file-input-label {
-    display: inline-block;
-    padding: 10px;
-    background-color: #ff4500;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.file-input {
-    display: none;
-    /* Oculta o input real */
-}
-
-.image-preview {
-    margin-top: 10px;
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-/* Botão de fechar no canto superior direito */
+/* Botão de fechar */
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     background: transparent;
     border: none;
+    position: absolute;
     color: #fff;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
 }
 
 .close-btn:hover {
     color: #ff4500;
+}
+
+.addpost-form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.addpost-form input,
+.addpost-form textarea {
+    width: 100%; 
+    padding: 8px;
+    background-color: #3b3b3b;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    border-radius: 4px;
+}
+
+.addpost-form-button {
+    background-color: #ff4500;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Botão ocupa toda a largura */
+    font-size: 1.2rem;
+}
+
+.addpost-form-button:hover {
+    background-color: #ff8c1a;
+}
+
+/* Estilos da lista de posts */
+.posts-container {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.addpost-post-container {
+    background-color: #171717;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    position: relative;
+}
+
+/* Botões sobre a imagem */
+.post-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 500px; /* Ajustando o espaço para imagens */
+    overflow: hidden;
+}
+
+/* Botões de edição e exclusão sobre a imagem */
+.post-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.post-buttons button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    font-size: 1.3rem;
+    background-color: rgba(23, 23, 23, 0.671);
+    color: #ff4500;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-buttons button:hover {
+    background-color: #ff4500;
+    color: #fff;
+}
+
+.post-buttons button + button {
+    margin-left: 0.5rem;
+}
+
+/* Estilo para inputs de arquivo */
+.file-input-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.file-input-label {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.file-input {
+    display: none;
+}
+
+/* Ajuste da imagem dentro do modal */
+.post-info1 img {
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+}
+
+/* Container de imagem para garantir o tamanho correto */
+.post-image-container {
+    max-width: 500px;
+    width: 100%;
+    max-height: 500px; 
+    overflow: hidden;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.post-image-container img {
+    width: 100%;
+    height: auto; /* Ajusta a altura proporcionalmente */
+    object-fit: contain; /* Ajusta sem cortar */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+/* Estilo da pré-visualização da imagem */
+.image-preview {
+    margin-top: 10px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
