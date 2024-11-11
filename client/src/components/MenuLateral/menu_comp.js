@@ -4,12 +4,7 @@ import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
 import { useNavigate } from 'react-router-dom';
-
-// Importações para Firebase
-import { db } from '../../firebaseConnection';
-import { query, where, collection, onSnapshot } from "firebase/firestore";
-import { auth } from '../../firebaseConnection';
-import { signOut } from "firebase/auth";
+import axios from 'axios';
 
 const MenuLateral = ({ setModalOpen }) => {
   const [userInfo, setUserInfo] = useState({});
@@ -18,25 +13,14 @@ const MenuLateral = ({ setModalOpen }) => {
   useEffect(() => {
     // Recupera os dados do usuário do sessionStorage
     const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
-    if (storedUserData && storedUserData.uid) {
-      const userQuery = query(
-        collection(db, 'users'),
-        where("uid", "==", storedUserData.uid)
-      );
 
-      const unsubscribe = onSnapshot(userQuery, (snapshot) => {
-        snapshot.forEach((doc) => {
-          setUserInfo(doc.data());
-        });
-      });
-
-      return () => unsubscribe();
+    if (storedUserData) {
+      setUserInfo(storedUserData);
     }
   }, []);
 
   async function doLogout() {
     try {
-      await signOut(auth);
       sessionStorage.removeItem('userData');
       alert('Você saiu da conta com sucesso!');
       navigate('/');
@@ -52,14 +36,16 @@ const MenuLateral = ({ setModalOpen }) => {
 
   return (
     <div className="container">
+      {/* Verificando se a imagem do usuário está disponível */}
       <img
-        src={userInfo.userImage}
+        src={userInfo.userImage || 'https://via.placeholder.com/150'}
         alt="Perfil"
         className="img-perfil"
       />
-      <p className="username">{userInfo.username}</p>
+      <p className="username">{userInfo.username || 'Usuário'}</p>
 
       <div className="follow-info">
+        {/* Valores fixos para seguidores e seguindo, você pode ajustar conforme os dados reais */}
         <p>434.4k<br />Seguidores</p>
         <p>1089<br />Seguindo</p>
       </div>

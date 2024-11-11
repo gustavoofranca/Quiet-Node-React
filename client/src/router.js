@@ -4,8 +4,6 @@ import LoginPage from './pages/login_page/login_p';
 import HomePage from './pages/Home/home_p';
 import UserConfig from './components/userConfig/userConfig_comp';
 
-// import NotFound from './components/NotFound'; // exemplo de uma página 404
-
 const AppRouter = () => {
   return (
     <Router>

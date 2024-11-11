@@ -1,1 +1,1 @@
-npm install react-icons firebase axios react-router-dom cookie-parser express express-session web-vitals react-toastify
+npm install react-icons firebase axios react-router-dom cookie-parser express express-session web-vitals react-toastify mongodb mongoose cors dotenv

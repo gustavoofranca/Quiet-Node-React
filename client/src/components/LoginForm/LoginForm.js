@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
-
-// Bibliotecas para criação e verificação de Usuário
-import { auth, db } from '../../firebaseConnection';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import axios from 'axios';
 
 const LoginComp = () => {
   const [email, setEmail] = useState('');
@@ -19,29 +15,7 @@ const LoginComp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
   const [action, setAction] = useState('Login');
-
-  // Verificação de login
-  useEffect(() => {
-    const verifyLogin = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(true);
-        const userData = {
-          uid: user.uid,
-          email: user.email
-        };
-        setUserInfo(userData);
-        sessionStorage.setItem('userData', JSON.stringify(userData));
-      } else {
-        setUser(false);
-        setUserInfo([]);
-        sessionStorage.removeItem('userData');
-      }
-    });
-    return () => verifyLogin();
-  }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -50,106 +24,66 @@ const LoginComp = () => {
   async function loginUser(event) {
     event.preventDefault();
     try {
-      const value = await signInWithEmailAndPassword(auth, email, password);
-      toast.success('Usuário logado com sucesso!', { className: 'toast-success' });
+      // Envia os dados para o backend para autenticação
+      const response = await axios.post('http://localhost:5000/api/login', { username, password, email });
 
-      const querySnapshot = await getDocs(collection(db, 'users'));
-      const userDoc = querySnapshot.docs.find(doc => doc.data().email === email);
+      const userData = response.data.user; // Ajuste conforme a resposta da API
 
-      if (userDoc) {
-        const userData = {
-          uid: value.user.uid,
-          email: value.user.email,
-          username: userDoc.data().username,
-          userImage: userDoc.data().userImage || 'https://images.unsplash.com/photo-1664548726438-8ca4728829b1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      if (userData) {
+        toast.success('Usuário logado com sucesso!', { className: 'toast-success' });
+
+        // Salva os dados do usuário (incluindo a imagem) no sessionStorage
+        const userDataToSave = {
+          username: userData.username,
+          email: userData.email,
+          userImage: userData.userImage, // Incluindo a imagem aqui
         };
-        setUser(true);
-        setUserInfo(userData);
-        sessionStorage.setItem('userData', JSON.stringify(userData));
+
+        sessionStorage.setItem('userData', JSON.stringify(userDataToSave));
+
         // Redireciona para a página "home" após o login bem-sucedido
         navigate('/home');
       } else {
-        console.log("Erro: Usuário não encontrado na coleção 'users'.");
+        toast.error('Erro ao fazer o login! Dados não encontrados.', { className: 'toast-error' });
       }
 
+      // Limpa os campos após o login
       setEmail('');
       setPassword('');
-    } catch {
+    } catch (error) {
       toast.error('Erro ao fazer o login!', { className: 'toast-error' });
     }
   }
 
-  async function createUser(event) {
+
+  async function createFinalUser(event) {
     event.preventDefault();
-    if (!email.trim() || !password.trim()) {
-      toast.warn('Por favor, preencha o email e a senha.', { className: 'toast-warn' });
-      return null;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const uid = userCredential.user.uid;
-      setEmail('');
-      setPassword('');
-      return uid;
-    } catch (error) {
-      if (error.code === 'auth/weak-password') {
-        toast.error('Senha muito fraca!', { className: 'toast-error' });
-      } else if (error.code === 'auth/email-already-in-use') {
-        toast.error('Email já cadastrado!', { className: 'toast-error' });
-      }
-      return null;
-    }
-  }
-
-  async function createUserInfo(uid) {
-    if (!username.trim()) {
-      toast.warn('Por favor, preencha o campo Apelido.', { className: 'toast-warn' });
+    if (!username.trim() || !email.trim() || !password.trim()) {
+      toast.warn('Por favor, preencha todos os campos.', { className: 'toast-warn' });
       return;
     }
 
     try {
-      await addDoc(collection(db, 'users'), {
-        uid: uid,
+      const userImageURL = 'https://images.unsplash.com/photo-1664548726438-8ca4728829b1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+      await axios.post('http://localhost:5000/api/register', {
         username: username,
-        userImage: 'https://images.unsplash.com/photo-1664548726438-8ca4728829b1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         email: email,
-        password: password
+        password: password,
+        userImage: userImageURL,
       });
 
+      toast.success('Cadastro completo com sucesso!', { className: 'toast-success' });
       setUsername('');
-      setUserImage('');
       setEmail('');
       setPassword('');
     } catch (error) {
-      console.log("Erro ao salvar informações adicionais do usuário:", error);
-    }
-  }
-
-  async function createFinalUser(event) {
-    event.preventDefault();
-    const uid = await createUser(event);
-
-    if (uid) {
-      await createUserInfo(uid);
-      sessionStorage.setItem('userData', JSON.stringify({ uid, username, email }));
-      toast.success('Cadastro completo com sucesso!', { className: 'toast-success' });
+      toast.error('Erro ao registrar usuário!', { className: 'toast-error' });
     }
   }
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+
       <div className="login-box">
         <div className="logo-container">
           <img src={require('../../images/quiet-logo.png')} alt="Quiet Racing Club" className="logo" />

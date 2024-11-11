@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { db } from '../../firebaseConnection';
-import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import axios from 'axios';  // Para realizar requisições HTTP
 import { MdClose } from "react-icons/md";
 import { TiPencil } from "react-icons/ti"; // Ícone de editar
 import { FaRegTrashAlt } from "react-icons/fa"; // Ícone de excluir
@@ -11,10 +10,11 @@ const AddPost = ({ isOpen, closeModal }) => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [imageURL, setImageURL] = useState('');
-    const [post, setPost] = useState([]);
+    const [posts, setPosts] = useState([]);
     const [idPost, setIdPost] = useState('');
     const modalRef = useRef(null);
 
+    // Carregar os dados do usuário no sessionStorage
     useEffect(() => {
         const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
         if (storedUserData && storedUserData.username) {
@@ -23,20 +23,14 @@ const AddPost = ({ isOpen, closeModal }) => {
             console.log("Erro: Dados do usuário não encontrados no sessionStorage.");
         }
 
-        const loadPosts = () => {
-            const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
-                let postList = [];
-                snapshot.forEach((doc) => {
-                    postList.push({
-                        id: doc.id,
-                        owner: doc.data().owner,
-                        description: doc.data().description,
-                        image: doc.data().image
-                    });
-                });
-                setPost(postList);
-            });
-            return () => unsubscribe();
+        // Carregar os posts do MongoDB
+        const loadPosts = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/posts');  // Supondo que seu backend tem esse endpoint
+                setPosts(response.data);
+            } catch (error) {
+                console.error("Erro ao carregar posts:", error);
+            }
         };
 
         loadPosts();
@@ -51,7 +45,8 @@ const AddPost = ({ isOpen, closeModal }) => {
         }
     };
 
-    async function addPost() {
+    // Função para adicionar ou editar o post
+    const addPost = async () => {
         if (!owner) {
             alert("Erro: Usuário não encontrado. Por favor, faça login novamente.");
             return;
@@ -65,68 +60,81 @@ const AddPost = ({ isOpen, closeModal }) => {
         const imageToSave = imageURL.trim() ? imageURL : image;
 
         if (idPost) {
-            editPost(imageToSave);
+            await editPost(imageToSave);
         } else {
-            await addDoc(collection(db, 'posts'), {
+            await addNewPost(imageToSave);
+        }
+    };
+
+    // Função para adicionar um novo post
+    const addNewPost = async (imageToSave) => {
+        try {
+            const response = await axios.post('http://localhost:5000/api/posts', {
                 owner: owner,
                 description: description,
-                image: imageToSave
-            })
-                .then(() => {
-                    alert('Cadastro realizado com sucesso!');
-                    setDescription('');
-                    setImage('');
-                    setImageURL('');
-                    closeModal();
-                })
-                .catch((error) => {
-                    console.log("Erro ao adicionar o post:", error);
-                });
-        }
-    }
+                image: imageToSave,
+            });
 
-    async function editPost(imageToSave) {
+            alert('Post adicionado com sucesso!');
+            setDescription('');
+            setImage('');
+            setImageURL('');
+            closeModal();
+            setPosts([...posts, response.data]);  // Adiciona o novo post ao estado
+        } catch (error) {
+            console.error("Erro ao adicionar o post:", error);
+        }
+    };
+
+    const editPost = async (imageToSave) => {
         if (!idPost) {
             alert("Selecione um post para editar.");
             return;
         }
-        const postEditado = doc(db, 'posts', idPost);
-        await updateDoc(postEditado, {
-            owner: owner,
-            description: description,
-            image: imageToSave
-        })
-            .then(() => {
-                alert('Post editado com sucesso!');
-                setIdPost('');
-                setDescription('');
-                setImage('');
-                setImageURL('');
-                closeModal();
-            })
-            .catch((error) => {
-                console.log("Erro ao editar o post:", error);
-            });
-    }
 
-    async function deletePost(id) {
-        const postExcluido = doc(db, 'posts', id);
-        await deleteDoc(postExcluido)
-            .then(() => {
-                alert('Post excluído com sucesso!');
-            })
-            .catch((error) => {
-                console.log("Erro ao excluir o post:", error);
+        try {
+            const response = await axios.put(`http://localhost:5000/api/posts/${idPost}`, {
+                owner: owner,
+                description: description,
+                image: imageToSave,
             });
-    }
 
-    function loadPostForEdit(post) {
+            alert('Post editado com sucesso!');
+            setIdPost('');
+            setDescription('');
+            setImage('');
+            setImageURL('');
+            closeModal();
+
+            // Atualiza o estado com os posts modificados
+            setPosts(posts.map(post => post.id === idPost ? response.data : post));
+        } catch (error) {
+            console.error("Erro ao editar o post:", error);
+        }
+    };
+
+
+
+    const deletePost = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/api/posts/${id}`);
+            alert('Post excluído com sucesso!');
+            setPosts(posts.filter(post => post.id !== id)); // Atualiza o estado após a exclusão
+        } catch (error) {
+            console.error("Erro ao excluir o post:", error);
+        }
+    };
+
+
+
+    // Função para carregar o post no formulário de edição
+    const loadPostForEdit = (post) => {
         setIdPost(post.id);
         setOwner(post.owner);
         setDescription(post.description);
         setImage(post.image);
         setImageURL('');
-    }
+    };
 
     const handleOutsideClick = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -182,7 +190,7 @@ const AddPost = ({ isOpen, closeModal }) => {
 
                 <h4 className='modal-list'>Lista de Posts</h4>
                 <div className="posts-container">
-                    {post.map((post) => (
+                    {posts.map((post) => (
                         <div key={post.id} className="addpost-post-container">
                             <div className="post-image-container">
                                 <img src={post.image} alt="Post" />
