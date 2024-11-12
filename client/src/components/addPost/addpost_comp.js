@@ -1,3 +1,4 @@
+// addpost_comp.js
 import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../../firebaseConnection';
 import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
