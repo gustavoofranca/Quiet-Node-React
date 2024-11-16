@@ -1,0 +1,99 @@
+<!-- Stories Content -->
+        <div class="stories">
+            <!-- Stories 1 -->
+            <div class="stories-img color">
+                <img src="img/profile33.png" alt="">
+                <div class="add">+</div>
+            </div>
+            <!-- Stories 2 -->
+            <div class="stories-img">
+                <img src="img/profile.jpg" alt="">
+            </div>
+            <!-- Stories  3 -->
+            <div class="stories-img">
+                <img src="img/profile3.jpg" alt="">
+            </div>
+            <!-- Stories 4 -->
+            <div class="stories-img">
+                <img src="img/profile4.jpg" alt="">
+            </div>
+            <!-- Stories 5 -->
+            <div class="stories-img">
+                <img src="img/profile5.jpg" alt="">
+            </div>
+            <!-- Stories 6 -->
+            <div class="stories-img">
+                <img src="img/profile6.jpg" alt="">
+            </div>
+            <!-- Stories 7 -->
+            <div class="stories-img">
+                <img src="img/profile7.jpg" alt="">
+            </div>
+            <!-- Stories 8 -->
+            <div class="stories-img">
+                <img src="img/profile8.jpg" alt="">
+            </div>
+            <!-- Stories 9 -->
+            <div class="stories-img">
+                <img src="img/profile9.jpg" alt="">
+            </div>
+            <!-- Stories 10 -->
+            <div class="stories-img">
+                <img src="img/profile10.jpg" alt="">
+            </div>
+        </div>
+
+        .stories-title {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+.stories-title h1 {
+  font-size: 1.8rem;
+}
+.stories-title .btn {
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+.stories-title .btn i {
+  font-size: 24px;
+  margin-right: 10px;
+}
+.stories {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+.stories-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #e2336b;
+}
+.stories-img img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+  object-position: center;
+}
+.stories-img.color {
+  border: 2px solid #dbdbdb;
+}
+.stories-img .add {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  color: #fff;
+  background: hsla(246, 100%, 67%, 0.7);
+}

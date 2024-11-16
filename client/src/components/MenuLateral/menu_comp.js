@@ -86,3 +86,4 @@ const MenuLateral = ({ setModalOpen }) => {
 };
 
 export default MenuLateral;
+// Teste
