@@ -1,3 +1,4 @@
+// menu_comp.js
 import React, { useState, useEffect } from 'react';
 import { FaHome, FaSearch, FaUserCog, FaPlusCircle } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
