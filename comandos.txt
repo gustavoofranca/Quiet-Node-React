@@ -1,1 +1,6 @@
+============INSTALAR NA PASTA "CLIENT"==============
 npm install react-icons firebase axios react-router-dom cookie-parser express express-session web-vitals react-toastify
+
+
+============INSTALAR NA PASTA "SERVER"==============
+npm install express cors 
