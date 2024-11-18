@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebaseConnection';
 import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { useTheme } from '../../context/ThemeContext'; // Importa o hook do tema
 import './feed_comp.css';
 
 const Feed = ({ openModal }) => {
   const [post, setPost] = useState([]);
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
+
+  const { currentTheme } = useTheme(); // Acessa o tema atual do contexto
 
   useEffect(() => {
     const loadPosts = () => {
@@ -49,19 +52,51 @@ const Feed = ({ openModal }) => {
   };
 
   return (
-    <div className="feed-main-container">
+    <div
+      className="feed-main-container"
+      style={{
+        background: currentTheme.background, // Fundo principal
+        color: currentTheme.color, // Cor do texto
+      }}
+    >
       <ul>
         {post.map((value) => (
-          <li className="feed-post-container" key={value.id}>
-            <strong className='post-owner'>{value.owner}</strong>
-            <img className="post-image" src={value.image} alt={value.owner} />
-            <p className='post-description'><strong>{value.owner}</strong> {value.description}</p>
-            <hr />
+          <li
+            className="feed-post-container"
+            key={value.id}
+            style={{
+              background: currentTheme.cardBackground, // Fundo do post
+              color: currentTheme.cardColor, // Cor do texto do post
+            }}
+          >
+            <strong
+              className='post-owner'
+              style={{ color: currentTheme.highlightColor }}
+            >
+              {value.owner}
+            </strong>
+            <img
+              className="post-image"
+              src={value.image}
+              alt={value.owner}
+              style={{
+                background: currentTheme.backgroundAlt, // Fundo alternativo para imagens
+                borderColor: currentTheme.borderColor, // Cor da borda
+              }}
+            />
+            <p className='post-description'>
+              <strong>{value.owner}</strong> {value.description}
+            </p>
+            <hr
+              style={{
+                borderColor: currentTheme.highlightColorLight, // Cor da linha
+              }}
+            />
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default Feed;

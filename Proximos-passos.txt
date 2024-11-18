@@ -11,3 +11,9 @@
 - "DM", mas ja acho demais
 - Pesquisa de postagens por #
 - Sistema de grupos e comunidades *prometido no escopo do projeto mas nunca feito*
+
+Gu -
+Adicionar stories
+Modal posts 
+modal stories  
+context api tema 

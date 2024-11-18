@@ -1,10 +1,10 @@
-// addpost_comp.js
 import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../../firebaseConnection';
 import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { MdClose } from "react-icons/md";
 import { TiPencil } from "react-icons/ti"; // Ícone de editar
 import { FaRegTrashAlt } from "react-icons/fa"; // Ícone de excluir
+import { useTheme } from '../../context/ThemeContext'; // Importa o hook do tema
 import './addpost_comp.css';
 
 const AddPost = ({ isOpen, closeModal }) => {
@@ -15,6 +15,8 @@ const AddPost = ({ isOpen, closeModal }) => {
     const [post, setPost] = useState([]);
     const [idPost, setIdPost] = useState('');
     const modalRef = useRef(null);
+
+    const { currentTheme } = useTheme(); // Acessa o tema atual do contexto
 
     useEffect(() => {
         const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
@@ -143,9 +145,27 @@ const AddPost = ({ isOpen, closeModal }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay">
-            <div className="addpost-main-container" ref={modalRef}>
-                <button className="close-btn" onClick={closeModal}>
+        <div
+            className="modal-overlay"
+            style={{
+                background: currentTheme.overlayBackground, // Aplica tema ao fundo
+            }}
+        >
+            <div
+                className="addpost-main-container"
+                ref={modalRef}
+                style={{
+                    background: currentTheme.background, // Fundo do modal
+                    color: currentTheme.color, // Cor do texto
+                }}
+            >
+                <button
+                    className="close-btn"
+                    onClick={closeModal}
+                    style={{
+                        color: currentTheme.color,
+                    }}
+                >
                     <MdClose size={30} />
                 </button>
 
@@ -158,9 +178,19 @@ const AddPost = ({ isOpen, closeModal }) => {
                         placeholder="URL da Imagem"
                         value={imageURL}
                         onChange={(e) => setImageURL(e.target.value)}
+                        style={{
+                            background: currentTheme.inputBackground,
+                            color: currentTheme.inputColor,
+                        }}
                     />
                     <div className="file-input-container">
-                        <label className="file-input-label">
+                        <label
+                            className="file-input-label"
+                            style={{
+                                background: currentTheme.inputBackground,
+                                color: currentTheme.inputColor,
+                            }}
+                        >
                             Selecione uma Imagem
                             <input
                                 type="file"
@@ -176,15 +206,35 @@ const AddPost = ({ isOpen, closeModal }) => {
                         placeholder="Descrição do Post"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        style={{
+                            background: currentTheme.inputBackground,
+                            color: currentTheme.inputColor,
+                        }}
                     />
 
-                    <button className="addpost-form-button" onClick={addPost}>Salvar</button>
+                    <button
+                        className="addpost-form-button"
+                        onClick={addPost}
+                        style={{
+                            background: currentTheme.buttonBackground,
+                            color: currentTheme.buttonColor,
+                        }}
+                    >
+                        Salvar
+                    </button>
                 </div>
 
                 <h4 className='modal-list'>Lista de Posts</h4>
                 <div className="posts-container">
                     {post.map((post) => (
-                        <div key={post.id} className="addpost-post-container">
+                        <div
+                            key={post.id}
+                            className="addpost-post-container"
+                            style={{
+                                background: currentTheme.cardBackground,
+                                color: currentTheme.cardColor,
+                            }}
+                        >
                             <div className="post-image-container">
                                 <img src={post.image} alt="Post" />
                                 <div className="post-buttons">

@@ -6,8 +6,10 @@ import { db, auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 import { query, where, doc, collection, updateDoc, onSnapshot } from "firebase/firestore";
 import './userConfig_comp.css';
+import { useTheme } from '../../context/ThemeContext';
 
 const UserConfig = () => {
+    const { currentTheme, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [userImage, setUserImage] = useState('');
