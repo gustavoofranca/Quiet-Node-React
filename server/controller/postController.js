@@ -1,4 +1,4 @@
-import { firebaseapp } from "../firebaseConnection";
+import { firebaseapp } from "../firebase";
 
 import {
     getFirestore, collection, doc, addDoc,
