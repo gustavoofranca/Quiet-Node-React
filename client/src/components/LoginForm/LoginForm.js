@@ -192,9 +192,9 @@ const LoginComp = () => {
           {action === "Login" ? (
             <>
               <button className="btn-login" onClick={loginUser}>Entrar</button>
-              <button type="button" className="btn-google">
+              {/* <button type="button" className="btn-google">
                 <FcGoogle className="icon-google" /> Continue com Google
-              </button>
+              </button> */}
               <p className="login-footer">
                 Ainda não tem uma conta? <a onClick={() => { setAction('Sign Up') }}>Cadastre-se</a>
               </p>
