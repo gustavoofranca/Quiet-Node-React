@@ -1,0 +1,96 @@
+/* Container principal */
+.localizacao-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Título no topo */
+.header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: var(--color);
+    margin: 0;
+}
+
+/* Formulário de adicionar localização */
+.location-form {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Campos de entrada do formulário */
+.location-form label {
+    font-weight: bold;
+    color: var(--color);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.location-form input,
+.location-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    background-color: var(--input-background);
+    color: var(--input-color);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+}
+
+.location-form button {
+    background-color: var(--button-background);
+    color: var(--button-color);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.location-form button:hover {
+    background-color: #ff8c1a;
+}
+
+/* Feed das localizações */
+.feed-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.localizacao-item {
+    background-color: var(--card-background);
+    color: var(--card-color);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.localizacao-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--color);
+}
+
+.localizacao-item p {
+    font-size: 1rem;
+    color: var(--text-color);
+}
