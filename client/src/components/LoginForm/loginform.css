@@ -196,29 +196,25 @@ body.light .login-box {
   
   body.light input {
     background-color: #f9f9f9;
-    color: #333;
+    color: #ccc;
     border: 1px solid #ccc;
   }
   
   body.light input:focus {
-    border: #666 2.5px solid;
+    border: #333 2.5px solid;
     box-shadow: 0 0 5px rgba(102, 102, 102, 0.8),
       0 0 10px rgba(102, 102, 102, 0.6),
       0 0 10px rgba(102, 102, 102, 0.4);
   }
   
-  body.light .btn-login {
-    background-color: #333;
-    color: #fff;
-  }
-  
+
   body.light .btn-google {
     background-color: #f1f1f1;
     color: #333;
   }
   
-  body.light .login-footer a {
-    color: #333;
+  body.light .login-footer  {
+    color: #171717;
   }
   
   body.light .icon-eye {

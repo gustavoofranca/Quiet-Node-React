@@ -1,116 +1,136 @@
-/* index.css */
-body {
+/* Estilos globais */
+body.light, body.dark {
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s, color 0.2s;
-  overflow: hidden;
-  color: inherit; /* Herda a cor do tema para evitar valores fixos */
+  padding: 0;
 }
 
-/* Tema Light */
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  background: var(--background);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cores */
 body.light {
-  background-color: #f9f9f9; /* Fundo branco */
-  color: #333; /* Texto escuro */
+  --background: #fff;
+  --text-color: #333;
+  --input-background: #f7f7f7;
+  --button-background: #ff1900; /* Vermelho */
+  --button-hover: #e74c3c; /* Laranja */
 }
 
-body.light .login-container,
-body.light .home-container,
-body.light .main-content {
-  background-color: #fff; /* Fundo das áreas principais em branco */
-  color: #333; /* Texto escuro para garantir legibilidade */
-}
-
-body.light .login-box,
-body.light .feed,
-body.light .addPost,
-body.light .userConfig {
-  background-color: #f0f0f0; /* Fundo de caixas e áreas secundárias em cinza claro */
-  color: #333; /* Texto escuro */
-  border: 1px solid #ccc; /* Bordas mais claras */
-}
-
-body.light .btn-primary {
-  background-color: #007bff; /* Botões em azul claro */
-  color: #fff;
-}
-
-body.light .btn-google {
-  background-color: #fff; /* Botões do Google com fundo branco */
-  color: #333;
-  border: 1px solid #ccc; /* Bordas mais suaves */
-}
-
-body.light .icon-eye {
-  color: #888; /* Ícones de olho em cinza claro */
-}
-
-body.light a {
-  color: #007bff; /* Links no tema claro */
-}
-
-body.light .username,
-body.light .follow-info p,
-body.light .theme-text {
-  color: #333; /* Texto no tema claro */
-}
-
-/* Tema Dark */
 body.dark {
-  background-color: #171717; /* Fundo escuro */
-  color: #fff; /* Texto claro */
+  --text-color: #ecf0f1;
+  --button-background: #ff1900; /* Vermelho */
+  --button-hover: #e74c3c; /* Laranja */
 }
 
-body.dark .login-container,
-body.dark .home-container,
-body.dark .main-content {
-  background-color: #121212; /* Fundo das áreas principais em escuro */
-  color: #fff; /* Texto claro */
+/* Logo */
+.logo-container img {
+  width: 100px;
+  margin-bottom: 20px;
 }
 
-body.dark .login-box,
-body.dark .feed,
-body.dark .addPost,
-body.dark .userConfig {
-  background-color: #2a2a2a; /* Fundo de caixas e áreas secundárias mais escuras */
-  color: #fff; /* Texto claro */
-  border: 1px solid #444; /* Bordas mais escuras */
+/* Títulos */
+h2 {
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 20px;
 }
 
-body.dark .btn-primary {
-  background-color: #e50914; /* Botões vermelhos */
+/* Campos de Entrada */
+.input-group label {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  background-color: var(--input-background);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.input-group input:focus {
+  border-color: var(--button-background);
+  outline: none;
+}
+
+/* Botões */
+.btn-login {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--button-background);
   color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-body.dark .btn-google {
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #444; /* Bordas mais escuras */
+.btn-login:hover {
+  background-color: var(--button-hover);
 }
 
-body.dark .icon-eye {
-  color: #ccc; /* Ícones de olho em cinza claro */
+/* Botão Google */
+.btn-google {
+  width: 100%;
+  padding: 10px;
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
-body.dark a {
-  color: #1da1f2; /* Links no tema escuro */
+.btn-google:hover {
+  background-color: #357ae8;
 }
 
-body.dark .username,
-body.dark .follow-info p,
-body.dark .theme-text {
-  color: #fff; /* Texto no tema escuro */
+.icon-google {
+  margin-right: 10px;
 }
 
-/* Estilos adicionais para links */
-a {
-  color: inherit; /* Links herdando a cor do tema */
-  text-decoration: none;
+/* Footer */
+.login-footer {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--text-color);
 }
 
-a:hover {
-  text-decoration: underline; /* Links sublinhados no hover */
+.login-footer a {
+  color: var(--button-background);
+  cursor: pointer;
+}
+
+.login-footer a:hover {
+  color: var(--button-hover);
+}
+
+/* Alternância de Tema */
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.switch-label {
+  margin-right: 10px;
+  font-size: 18px;
+  color: var(--text-color);
 }
