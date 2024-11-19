@@ -70,6 +70,8 @@ const MenuLateral = ({ setModalOpen }) => {
           <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
           <li onClick={() => navigate('/user-config')}><FaUserCog className='icons' /> Configurações</li>
+          {/* Novo botão Localização */}
+          <li onClick={() => navigate('/localizacao')}><FaSearch className='icons' /> Localização</li>
         </ul>
       </div>
 
