@@ -1,12 +1,11 @@
-// LoginForm.js
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from '../../context/ThemeContext'; // Importar o contexto do tema
+import { useTheme } from '../../context/ThemeContext'; // Usando o hook useTheme para acessar o contexto do tema
 
 // Bibliotecas para criação e verificação de Usuário
 import { auth, db } from '../../firebaseConnection';
@@ -14,7 +13,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
 const LoginComp = () => {
-  const { theme } = useContext(ThemeContext); // Acessar o tema atual
+  const { currentTheme, toggleTheme } = useTheme(); // Usando o hook para acessar e alternar o tema
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -69,7 +68,6 @@ const LoginComp = () => {
         setUser(true);
         setUserInfo(userData);
         sessionStorage.setItem('userData', JSON.stringify(userData));
-        // Redireciona para a página "home" após o login bem-sucedido
         navigate('/home');
       } else {
         console.log("Erro: Usuário não encontrado na coleção 'users'.");
@@ -153,11 +151,10 @@ const LoginComp = () => {
         draggable
         pauseOnHover
       />
-      <div className={`login-box ${theme}`}>
+      <div className={`login-box ${currentTheme}`}>
         <div className="logo-container">
-          {/* Troca da logo com base no tema */}
           <img
-            src={require(`../../images/quiet-logo${theme === 'light' ? '-preto' : ''}.png`)}
+            src={require(`../../images/quiet-logo${currentTheme === 'light' ? '-preto' : ''}.png`)}
             alt="Quiet Racing Club"
             className="logo"
           />
