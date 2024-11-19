@@ -9,6 +9,7 @@ import './addpost_comp.css';
 
 const AddPost = ({ isOpen, closeModal }) => {
     const [owner, setOwner] = useState('');
+    const [profilePic, setProfilePic] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [imageURL, setImageURL] = useState('');
@@ -22,6 +23,7 @@ const AddPost = ({ isOpen, closeModal }) => {
         const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
         if (storedUserData && storedUserData.username) {
             setOwner(storedUserData.username);
+            setProfilePic(storedUserData.userImage);
         } else {
             console.log("Erro: Dados do usuário não encontrados no sessionStorage.");
         }
@@ -33,6 +35,7 @@ const AddPost = ({ isOpen, closeModal }) => {
                     postList.push({
                         id: doc.id,
                         owner: doc.data().owner,
+                        profilePic: doc.data().profilePic,
                         description: doc.data().description,
                         image: doc.data().image
                     });
@@ -72,6 +75,7 @@ const AddPost = ({ isOpen, closeModal }) => {
         } else {
             await addDoc(collection(db, 'posts'), {
                 owner: owner,
+                profilePic: profilePic,
                 description: description,
                 image: imageToSave
             })
@@ -126,6 +130,7 @@ const AddPost = ({ isOpen, closeModal }) => {
     function loadPostForEdit(post) {
         setIdPost(post.id);
         setOwner(post.owner);
+        setProfilePic(post.profilePic);
         setDescription(post.description);
         setImage(post.image);
         setImageURL('');

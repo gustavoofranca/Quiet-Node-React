@@ -19,6 +19,7 @@ const Feed = ({ openModal }) => {
           postList.push({
             id: doc.id,
             owner: doc.data().owner,
+            profilePic: doc.data().profilePic,
             description: doc.data().description,
             image: doc.data().image
           });
@@ -69,6 +70,7 @@ const Feed = ({ openModal }) => {
               color: currentTheme.cardColor, // Cor do texto do post
             }}
           >
+            <img className='img-perfil' src={value.profilePic}/>
             <strong
               className='post-owner'
               style={{ color: currentTheme.highlightColor }}
