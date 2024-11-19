@@ -37,7 +37,7 @@ const Feed = ({ openModal }) => {
       alert('Por favor, preencha todos os campos corretamente.');
       return;
     }
-    
+
     try {
       await addDoc(collection(db, 'posts'), {
         owner: '@demon.rs3',
@@ -70,13 +70,15 @@ const Feed = ({ openModal }) => {
               color: currentTheme.cardColor, // Cor do texto do post
             }}
           >
-            <img className='img-perfil' src={value.profilePic}/>
-            <strong
-              className='post-owner'
-              style={{ color: currentTheme.highlightColor }}
-            >
-              {value.owner}
-            </strong>
+            <div className='post-user-info'>
+              <img className='post-img-perfil' src={value.profilePic} />
+              <strong
+                className='post-owner'
+                style={{ color: currentTheme.highlightColor }}
+              >
+                {value.owner}
+              </strong>
+            </div>
             <img
               className="post-image"
               src={value.image}
