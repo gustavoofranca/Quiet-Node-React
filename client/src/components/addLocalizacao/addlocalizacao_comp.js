@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConnection';
-import { collection, addDoc, onSnapshot } from 'firebase/firestore';
+import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MdClose } from 'react-icons/md';
