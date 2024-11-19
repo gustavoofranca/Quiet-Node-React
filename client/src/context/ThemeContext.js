@@ -7,7 +7,7 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState('light');
+  const [currentTheme, setCurrentTheme] = useState('dark');
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -16,8 +16,8 @@ export const ThemeProvider = ({ children }) => {
       document.body.classList.add(savedTheme); 
     } else {
 
-      setCurrentTheme('light');
-      document.body.classList.add('light');
+      setCurrentTheme('dark');
+      document.body.classList.add('dark');
     }
   }, []);
 
