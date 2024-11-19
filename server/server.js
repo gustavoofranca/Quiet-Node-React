@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+const PORT = process.env.PORT || 8000;
 
-import config from './config.js';
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
 
@@ -13,6 +13,6 @@ app.use(express.json());
 // Inicializar as rotas
 app.use('/api', userRoute, postRoute);
 
-app.listen(config.port, () =>
-    console.log(`Server is live @ ${config.hostUrl}`),
-);
+app.listen(PORT, () => {
+    console.log(`Server running on port http://localhost:${PORT}`);
+})

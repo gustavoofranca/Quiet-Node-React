@@ -1,7 +1,8 @@
-import firebase from '../firebase.js';
+import config from '../config.js';
+
+const { db } = config;
 
 import {
-    getFirestore,
     collection,
     doc,
     addDoc,
@@ -10,9 +11,6 @@ import {
     updateDoc,
     deleteDoc,
 } from 'firebase/firestore';
-
-const db = getFirestore(firebase);
-
 
 // ======= INÍCIO CRUD ===================================================================
 
