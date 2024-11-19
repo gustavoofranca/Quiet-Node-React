@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebaseConnection';
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
-import { useTheme } from '../../context/ThemeContext'; // Importa o hook do tema
+import { collection, addDoc, onSnapshot, doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { useTheme } from '../../context/ThemeContext';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { PiChatCircleBold } from 'react-icons/pi';
 import './feed_comp.css';
+import PostModal from '../postModal/postModal';
 
-const Feed = ({ openModal }) => {
-  const [post, setPost] = useState([]);
+const Feed = () => {
+  const [posts, setPosts] = useState([]);
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
-
-  const { currentTheme } = useTheme(); // Acessa o tema atual do contexto
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { currentTheme } = useTheme();
 
   useEffect(() => {
     const loadPosts = () => {
       const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
         let postList = [];
         snapshot.forEach((doc) => {
+          const data = doc.data();
           postList.push({
             id: doc.id,
-            owner: doc.data().owner,
-            profilePic: doc.data().profilePic,
-            description: doc.data().description,
-            image: doc.data().image
+            owner: data.owner,
+            profilePic: data.profilePic,
+            description: data.description,
+            image: data.image,
+            likes: Array.isArray(data.likes) ? data.likes : [],
+            comments: Array.isArray(data.comments) ? data.comments : [],
           });
         });
-        setPost(postList);
+        setPosts(postList);
       });
       return () => unsubscribe();
     };
@@ -41,64 +48,129 @@ const Feed = ({ openModal }) => {
     try {
       await addDoc(collection(db, 'posts'), {
         owner: '@demon.rs3',
+        profilePic: 'https://example.com/profile.jpg',
         description: description,
-        image: image
+        image: image,
+        likes: [],
+        comments: [],
       });
       setDescription('');
       setImage('');
-      openModal(false); // Fecha o modal após o post ser criado
     } catch (error) {
-      console.log("Erro ao adicionar o post:", error);
+      console.log('Erro ao adicionar o post:', error);
     }
+  };
+
+  const handleLike = async (postId, userId) => {
+    const postRef = doc(db, 'posts', postId);
+    const post = posts.find((p) => p.id === postId);
+
+    if (Array.isArray(post.likes)) {
+      if (post.likes.includes(userId)) {
+        await updateDoc(postRef, {
+          likes: arrayRemove(userId),
+        });
+      } else {
+        await updateDoc(postRef, {
+          likes: arrayUnion(userId),
+        });
+      }
+    } else {
+      console.error("Likes não é um array:", post.likes);
+    }
+  };
+
+  const openModal = (postId) => {
+    const post = posts.find((p) => p.id === postId);
+    setSelectedPost(post);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null);
+    setIsModalOpen(false);
   };
 
   return (
     <div
       className="feed-main-container"
       style={{
-        background: currentTheme.background, // Fundo principal
-        color: currentTheme.color, // Cor do texto
+        background: currentTheme.background,
+        color: currentTheme.color,
       }}
     >
       <ul>
-        {post.map((value) => (
+        {posts.map((value) => (
           <li
             className="feed-post-container"
             key={value.id}
             style={{
-              background: currentTheme.cardBackground, // Fundo do post
-              color: currentTheme.cardColor, // Cor do texto do post
+              background: currentTheme.cardBackground,
+              color: currentTheme.cardColor,
             }}
           >
-            <div className='post-user-info'>
-              <img className='post-img-perfil' src={value.profilePic} />
+            <div className="post-user-info">
+              <img className="post-img-perfil" src={value.profilePic} alt="Perfil" />
               <strong
-                className='post-owner'
+                className="post-owner"
                 style={{ color: currentTheme.highlightColor }}
               >
                 {value.owner}
               </strong>
             </div>
-            <img
-              className="post-image"
-              src={value.image}
-              alt={value.owner}
+            <div 
+              className="post-image-container"
               style={{
-                background: currentTheme.backgroundAlt, // Fundo alternativo para imagens
-                borderColor: currentTheme.borderColor, // Cor da borda
+                backgroundColor: currentTheme.name === 'light' ? '#ccc' : 'var(--background-alt)',
               }}
-            />
-            <p className='post-description'>
+            >
+              <img
+                className="post-image"
+                src={value.image}
+                alt={value.owner}
+                onClick={() => openModal(value.id)}
+              />
+            </div>
+            <p className="post-description">
               <strong>{value.owner}</strong> {value.description}
             </p>
+            <div className="post-actions">
+              {value.likes.includes('currentUserId') ? (
+                <FaHeart
+                  onClick={() => handleLike(value.id, 'currentUserId')}
+                  className="like-icon liked"
+                />
+              ) : (
+                <FaRegHeart
+                  onClick={() => handleLike(value.id, 'currentUserId')}
+                  className="like-icon"
+                />
+              )}
+              <span>{value.likes.length}</span>
+              <PiChatCircleBold
+                onClick={() => openModal(value.id)}
+                className="comment-icon"
+              />
+              <span>{value.comments.length}</span>
+            </div>
             <hr
               style={{
-                borderColor: currentTheme.highlightColorLight, // Cor da linha
+                borderColor: currentTheme.highlightColorLight,
               }}
             />
           </li>
         ))}
       </ul>
+
+      {isModalOpen && selectedPost && (
+        <PostModal
+          post={selectedPost}
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          currentUserName={"@demon.rs3"}
+          currentUserImageUrl={"https://example.com/profile.jpg"}
+        />
+      )}
     </div>
   );
 };

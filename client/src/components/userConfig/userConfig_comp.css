@@ -8,12 +8,11 @@
     background-color: #1b1b1b;
     min-height: 100vh;
     color: #f0f0f0;
-    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-y: auto;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Estilo da lista de usuários */
 .user-container {
     list-style-type: none;
     padding: 0;
@@ -93,7 +92,6 @@
     border: 2px solid #444;
 }
 
-/* Estilo do formulário para editar usuário */
 .addpost-form {
     display: flex;
     flex-direction: column;
@@ -131,7 +129,6 @@
     outline: none;
 }
 
-/* Estilo do campo de upload de arquivo e URL da imagem */
 .file-input-container {
     position: relative;
     margin-top: 10px;
@@ -164,7 +161,6 @@
     transition: border-color 0.3s;
 }
 
-/* Estilo da pré-visualização de imagem */
 .image-preview {
     margin-top: 15px;
     max-width: 100%;

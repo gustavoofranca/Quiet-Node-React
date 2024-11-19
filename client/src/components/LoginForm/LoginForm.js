@@ -5,27 +5,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext'; // Usando o hook useTheme para acessar o contexto do tema
-
-// Bibliotecas para criação e verificação de Usuário
+import { useTheme } from '../../context/ThemeContext';
 import { auth, db } from '../../firebaseConnection';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
 const LoginComp = () => {
-  const { currentTheme, toggleTheme } = useTheme(); // Usando o hook para acessar e alternar o tema
+  const { currentTheme, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [userImage, setUserImage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
   const [user, setUser] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
   const [action, setAction] = useState('Login');
 
-  // Verificação de login
   useEffect(() => {
     const verifyLogin = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -119,7 +114,6 @@ const LoginComp = () => {
       });
 
       setUsername('');
-      setUserImage('');
       setEmail('');
       setPassword('');
     } catch (error) {
@@ -172,7 +166,12 @@ const LoginComp = () => {
         <form>
           <div className="input-group">
             <label htmlFor="email">Email</label>
-            <input type="email" placeholder="Digite um email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              type="email"
+              placeholder="Digite um email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div className="input-group">

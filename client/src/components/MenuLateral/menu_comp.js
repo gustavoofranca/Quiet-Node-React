@@ -4,9 +4,8 @@ import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext'; // Importando o contexto de tema
+import { useTheme } from '../../context/ThemeContext';
 
-// Importações para Firebase
 import { db } from '../../firebaseConnection';
 import { query, where, collection, onSnapshot } from "firebase/firestore";
 import { auth } from '../../firebaseConnection';
@@ -15,8 +14,6 @@ import { signOut } from "firebase/auth";
 const MenuLateral = ({ setModalOpen }) => {
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
-
-  // Usando o contexto de tema
   const { currentTheme, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -50,7 +47,7 @@ const MenuLateral = ({ setModalOpen }) => {
   }
 
   const novoPost = () => {
-    setModalOpen(true); // Chama a função para abrir o modal no componente pai
+    setModalOpen(true);
   };
 
   return (
@@ -70,18 +67,14 @@ const MenuLateral = ({ setModalOpen }) => {
           <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
           <li onClick={() => navigate('/user-config')}><FaUserCog className='icons' /> Configurações</li>
-          {/* Novo botão Localização */}
-          <li onClick={() => navigate('/localizacao')}><FaSearch className='icons' /> Localização</li>
         </ul>
       </div>
 
-      {/* Botão de alternância de tema */}
       <div className="theme-toggle">
         <label className="switch">
           <input type="checkbox" checked={currentTheme === 'dark'} onChange={toggleTheme} />
           <span className="slider round"></span>
         </label>
-        {/* Texto ao lado do switch */}
         <span className="theme-text">
           {currentTheme === 'dark' ? 'Tema Escuro' : ' Tema Claro'}
         </span>

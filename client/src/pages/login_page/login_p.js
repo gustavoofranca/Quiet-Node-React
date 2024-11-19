@@ -22,16 +22,17 @@ const LoginPage = () => {
       <div className="login-right">
         {/* Switch de tema */}
         <div className="switch-container">
-          <label htmlFor="theme-switch" className="switch-label">
+          <label className="switch-label">
             {currentTheme === 'light' ? <FaSun /> : <FaMoon />}
           </label>
-          <input
-            id="theme-switch"
-            type="checkbox"
-            onChange={toggleTheme}
-            checked={currentTheme === 'dark'}
-            style={{ cursor: 'pointer' }}
-          />
+          <label className="switch">
+            <input
+              type="checkbox"
+              onChange={toggleTheme}
+              checked={currentTheme === 'dark'}
+            />
+            <span className="slider"></span>
+          </label>
         </div>
 
         {/* Formulário de login */}
