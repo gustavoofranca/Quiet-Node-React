@@ -1,15 +1,16 @@
-import { firebaseapp } from "../firebase";
+import config from '../config.js';
+
+const { db } = config;
 
 import {
-    getFirestore, collection, doc, addDoc,
+    collection,
+    doc,
+    addDoc,
     getDoc,
     getDocs,
     updateDoc,
     deleteDoc,
 } from 'firebase/firestore';
-
-const db = getFirestore(firebaseapp);
-
 
 // ======= INÍCIO CRUD ===================================================================
 
