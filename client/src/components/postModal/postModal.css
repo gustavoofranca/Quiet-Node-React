@@ -1,0 +1,137 @@
+/* Estilos gerais do modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--background);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #ff4500;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: left; /* Alinhado à esquerda */
+}
+
+.post-image-container {
+    text-align: center; /* Centraliza apenas a imagem */
+    margin-bottom: 20px;
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.post-description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    text-align: left; /* Alinhado à esquerda */
+}
+
+.comment-section {
+    margin-top: 20px;
+}
+
+.comments-list {
+    margin-bottom: 15px;
+}
+
+.comment-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment-details {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-message {
+    margin: 0;
+}
+
+.comment-author-image {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.delete-comment-icon {
+    cursor: pointer;
+    color: #ff4500;
+    font-size: 1.2rem;
+}
+
+.delete-comment-icon:hover {
+    color: #e04e00;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: var(--input-background);
+    color: var(--input-color);
+    resize: none; /* Bloqueia o redimensionamento */
+    height: 50px; /* Altura fixa para o input */
+}
+
+.add-comment-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--button-background);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-comment-btn:hover {
+    background-color: #e74c3c; /* Cor para hover */
+}

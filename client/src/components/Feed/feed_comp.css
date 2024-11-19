@@ -1,6 +1,5 @@
 .feed-main-container {
     max-width: 50%;
-    margin-left: 20%;
     padding: 2%;
     color: var(--color);
     overflow-y: auto;
@@ -11,6 +10,11 @@
     flex-direction: column;
     justify-content: center;
     margin-bottom: 5%;
+    border-radius: 5%;
+}
+
+.post-image-container {
+    background-color: var(--background-alt);
 }
 
 .post-image {
@@ -21,7 +25,6 @@
     border-radius: 8px;
     margin-top: 1%;
     margin-bottom: 1%;
-    background-color: var(--background-alt);
 }
 
 .post-description {
@@ -50,8 +53,50 @@
     object-fit: cover;
 }
 
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.like-icon {
+    color: #000; /* Preto no modo claro */
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.like-icon.liked {
+    color: #ff000d; /* Cor quando curtido */
+}
+
+.like-icon:hover {
+    color: #e50914; /* Cor ao passar o mouse */
+}
+
+.comment-icon {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.comment-icon:hover {
+    color: #e50914; /* Cor ao passar o mouse */
+}
 
 hr {
     margin-top: 5%;
     border-color: var(--highlight-color-light);
+}
+
+/* Estilo para modo escuro */
+body[data-theme='dark'] .like-icon {
+    color: white; /* Ícone de like branco no modo escuro */
+}
+
+body[data-theme='dark'] .comment-icon {
+    color: white; /* Ícone de comentário branco no modo escuro */
+}
+
+/* Se você quiser que a cor mude ao passar o mouse, adicione o seguinte */
+body[data-theme='dark'] .comment-icon:hover {
+    color: #e50914; /* Cor ao passar o mouse no modo escuro */
 }

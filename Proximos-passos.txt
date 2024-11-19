@@ -1,6 +1,6 @@
 - Criar uma api de imagens, ou arrumar a atual ou usar uma pronta ☑
-- Usar o Firebase para fornecer as imagens à api
-- Fazer o login funcionar (back-end)
+- Usar o Firebase para fornecer as imagens à api☑
+- Fazer o login funcionar (back-end)☑
 - Implementar o Firebase onde for possivel: login, postagens, likes, comentarios e etc
 - Tentar fazer api do gemini-ai funcionar como assistente virtual da rede social
 - Sistema de notificações ( se possivel)
@@ -16,4 +16,5 @@ Gu -
 Adicionar stories
 Modal posts 
 modal stories  
-context api tema 
+ajustar toques finais css
+context api tema ☑
