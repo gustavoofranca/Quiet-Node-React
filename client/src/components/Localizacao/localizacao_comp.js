@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConnection';
 import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'; // Para a integração com a API de clima
 import './localizacao_comp.css';
 
@@ -30,7 +32,7 @@ const LocalizacaoComp = () => {
 
   const handleAddLocalizacao = async () => {
     if (!descricao.trim() || !mapaHtml.trim()) {
-      alert("Por favor, preencha todos os campos.");
+      toast.warn("Por favor, preencha todos os campos.", { className: 'toast-warn' });
       return;
     }
 
@@ -46,13 +48,13 @@ const LocalizacaoComp = () => {
       alert("Localização adicionada com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar localização:", error);
-      alert("Não foi possível salvar a localização.");
+      toast.error("Não foi possível salvar a localização.", { className: 'toast-error' });
     }
   };
 
   const buscarClima = async () => {
     if (!cidade.trim()) {
-      alert("Por favor, insira o nome de uma cidade.");
+      toast.warn("Por favor, insira o nome de uma cidade.", { className: 'toast-warn' });
       return;
     }
 
@@ -63,80 +65,93 @@ const LocalizacaoComp = () => {
       setClima(response.data);
     } catch (error) {
       console.error("Erro ao buscar dados do clima:", error);
-      alert("Não foi possível buscar os dados do clima.");
+      toast.error("Não foi possível buscar os dados do clima.", { className: 'toast-error' });
     }
   };
 
   return (
-    <div className="localizacao-comp">
-      <div className="header">
-        <h1>Adicionar Localização</h1>
-      </div>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <div className="localizacao-comp">
+        <div className="header">
+          <h1>Adicionar Localização</h1>
+        </div>
 
-      <div className="location-form">
-        <label htmlFor="location-description">Descrição da Localização</label>
-        <textarea
-          id="location-description"
-          placeholder="Digite a descrição da localização"
-          rows="5"
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-        />
+        <div className="location-form">
+          <label htmlFor="location-description">Descrição da Localização</label>
+          <textarea
+            id="location-description"
+            placeholder="Digite a descrição da localização"
+            rows="5"
+            value={descricao}
+            onChange={(e) => setDescricao(e.target.value)}
+          />
 
-        <label htmlFor="location-map">Link do Mapa (Google Maps)</label>
-        <textarea
-          id="location-map"
-          placeholder="Cole o código do mapa do Google"
-          rows="3"
-          value={mapaHtml}
-          onChange={(e) => setMapaHtml(e.target.value)}
-        />
+          <label htmlFor="location-map">Link do Mapa (Google Maps)</label>
+          <textarea
+            id="location-map"
+            placeholder="Cole o código do mapa do Google"
+            rows="3"
+            value={mapaHtml}
+            onChange={(e) => setMapaHtml(e.target.value)}
+          />
 
-        <button onClick={handleAddLocalizacao}>
-          Adicionar Localização
-        </button>
-      </div>
+          <button onClick={handleAddLocalizacao}>
+            Adicionar Localização
+          </button>
+        </div>
 
-      <div className="weather-form">
-        <h2>Clima e Tempo</h2>
-        <input
-          type="text"
-          placeholder="Digite o nome da cidade"
-          value={cidade}
-          onChange={(e) => setCidade(e.target.value)}
-          className="weather-input"
-        />
-        <button onClick={buscarClima} className="weather-button">
-          Buscar Clima
-        </button>
+        <div className="weather-form">
+          <h2>Clima e Tempo</h2>
+          <input
+            type="text"
+            placeholder="Digite o nome da cidade"
+            value={cidade}
+            onChange={(e) => setCidade(e.target.value)}
+            className="weather-input"
+          />
+          <button onClick={buscarClima} className="weather-button">
+            Buscar Clima
+          </button>
 
-        {clima && (
-          <div className="weather-info">
-            <h3>Clima em {clima.name}</h3>
-            <p><strong>Temperatura:</strong> {clima.main.temp}°C</p>
-            <p><strong>Descrição:</strong> {clima.weather[0].description}</p>
-            <p><strong>Umidade:</strong> {clima.main.humidity}%</p>
-            <p><strong>Velocidade do Vento:</strong> {clima.wind.speed} km/h</p>
-          </div>
-        )}
-      </div>
-
-      <div className="feed-container">
-        {/* Renderizar as localizações adicionadas */}
-        {localizacoes.map((localizacao) => (
-          <div key={localizacao.id} className="localizacao-item">
-            <h3>{localizacao.descricao}</h3>
-            <div className="map-container">
-              {/* Exibe o mapa dinamicamente */}
-              <div
-                dangerouslySetInnerHTML={{ __html: localizacao.mapaHtml }}
-                className="map-frame"
-              />
+          {clima && (
+            <div className="weather-info">
+              <h3>Clima em {clima.name}</h3>
+              <p><strong>Temperatura:</strong> {clima.main.temp}°C</p>
+              <p><strong>Descrição:</strong> {clima.weather[0].description}</p>
+              <p><strong>Umidade:</strong> {clima.main.humidity}%</p>
+              <p><strong>Velocidade do Vento:</strong> {clima.wind.speed} km/h</p>
             </div>
-          </div>
-        ))}
+          )}
+        </div>
+
+        <div className="feed-container">
+          {/* Renderizar as localizações adicionadas */}
+          {localizacoes.map((localizacao) => (
+            <div key={localizacao.id} className="localizacao-item">
+              <h3>{localizacao.descricao}</h3>
+              <div className="map-container">
+                {/* Exibe o mapa dinamicamente */}
+                <div
+                  dangerouslySetInnerHTML={{ __html: localizacao.mapaHtml }}
+                  className="map-frame"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
