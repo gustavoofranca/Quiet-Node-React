@@ -7,6 +7,14 @@ input:-webkit-autofill:active {
     -webkit-text-fill-color: #fff;
 }
 
+/* Tema Claro */
+body.light input:-webkit-autofill,
+body.light input:-webkit-autofill:hover,
+body.light input:-webkit-autofill:focus,
+body.light input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #ccc inset !important;
+    -webkit-text-fill-color: #1a1a1a;
+}
 * {
     font-family: 'Poppins', sans-serif;
 }
@@ -16,7 +24,6 @@ body {
     height: 100%;
     overflow: hidden;
 }
-
 
 .login-box,
 .register-box {
@@ -66,13 +73,15 @@ label {
 }
 
 input {
-    width: 27.09rem;
-    padding: 0.8rem;
-    border: 1px solid #444;
+    width: 100%; /* Garantir que o input ocupe 100% da largura do container */
+    padding: 12px 15px; /* Padding consistente */
+    border: 2px solid #444;
     border-radius: 5px;
     margin-top: 0.5rem;
     background-color: #333;
     color: #fff;
+    box-sizing: border-box; /* Inclui o padding no tamanho total */
+    transition: all 0.3s ease; /* Transição suave */
 }
 
 input:focus {
@@ -80,19 +89,18 @@ input:focus {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
         0 0 10px rgba(255, 255, 255, 0.6),
         0 0 10px rgba(229, 9, 20, 0.4);
-    width: 27.09rem;
+    width: 100%; /* Mantém a largura consistente ao focar */
 }
 
 .password-container {
     display: flex;
     align-items: center;
-    width: 33.1rem
+    width: 100%;
 }
-
 
 .btn-login {
     width: 100%;
-    padding: 0.8rem;
+    padding: 12px 15px;
     background-color: #e50914;
     color: #fff;
     border: none;
@@ -104,7 +112,7 @@ input:focus {
 
 .btn-google {
     width: 100%;
-    padding: 0.8rem;
+    padding: 12px 15px;
     background-color: #fff;
     color: #333;
     border: none;
@@ -138,11 +146,9 @@ input:focus {
     cursor: pointer;
 }
 
-
 .Toastify__toast-container {
     font-family: 'Poppins', sans-serif;
 }
-
 
 .toast-success {
     background-color: #222 !important;
@@ -150,7 +156,6 @@ input:focus {
     font-weight: bold;
     border-radius: 8px;
 }
-
 
 .toast-error {
     background-color: #222 !important;
@@ -166,14 +171,12 @@ input:focus {
     border-radius: 8px;
 }
 
-
 .toast-info {
     background-color: #2196f3 !important;
     color: #fff !important;
     font-weight: bold;
     border-radius: 8px;
 }
-
 
 .Toastify__close-button {
     color: #fff !important;
@@ -184,43 +187,34 @@ body.light .login-box {
     background-color: #ffffff;
     border: #cccccc 1px solid;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  body.light h2 {
+}
+
+body.light h2 {
     color: #333;
-  }
-  
-  body.light label {
+}
+
+body.light label {
     color: #666;
-  }
-  
-  body.light input {
+}
+
+body.light input {
     background-color: #f9f9f9;
-    color: #333;
+    color: #333; /* Mudança para melhor contraste */
     border: 1px solid #ccc;
-  }
-  
-  body.light input:focus {
-    border: #666 2.5px solid;
+}
+
+body.light input:focus {
+    border: #333 2.5px solid;
     box-shadow: 0 0 5px rgba(102, 102, 102, 0.8),
-      0 0 10px rgba(102, 102, 102, 0.6),
-      0 0 10px rgba(102, 102, 102, 0.4);
-  }
-  
-  body.light .btn-login {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  body.light .btn-google {
-    background-color: #f1f1f1;
+        0 0 10px rgba(102, 102, 102, 0.6),
+        0 0 10px rgba(102, 102, 102, 0.4);
+}
+
+body.light .btn-google {
+    background-color: #adadad;
     color: #333;
-  }
-  
-  body.light .login-footer a {
-    color: #333;
-  }
-  
-  body.light .icon-eye {
-    fill: #333;
-  }
+}
+
+body.light .login-footer {
+    color: #171717;
+}

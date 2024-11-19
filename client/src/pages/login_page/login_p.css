@@ -20,15 +20,26 @@
 }
 
 .luz {
-  position: absolute;
-  right: -5px;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  border-right: 5px #fff solid;
-  filter: blur(40px);
-  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /* Sombra com base no tema */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Padrão (escuro) */
+  transition: box-shadow 0.3s ease-in-out;
 }
 
+/* No tema claro, a sombra deve ser preta */
+.login-container.light .luz {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra preta no tema claro */
+}
+
+/* No tema escuro, a sombra deve ser branca */
+.login-container.dark .luz {
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); /* Sombra branca no tema escuro */
+}
 .login-right {
   flex: 1;
   display: flex;
@@ -59,16 +70,155 @@ body.dark .login-right {
   color: #fff;
 }
 
+/* Estilo para o switch */
 .switch-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* O fundo do switch */
+.switch-container input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* A bolinha dentro do switch */
+.switch-container input[type="checkbox"]:before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+/* Estilos do switch e ícones */
+
+.switch-container {
+  display: flex;
+  align-items: center; /* Alinha o switch e os ícones verticalmente */
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 20px; /* Para espaçar do conteúdo superior */
 }
 
 .switch-label {
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center; /* Alinha o ícone e o texto na vertical */
+  margin-right: 10px; /* Espaço entre o ícone e o switch */
+  font-size: 1.3rem; /* Ajuste o tamanho do ícone */
   cursor: pointer;
+  color: #fff; /* Cor do ícone */
+  transition: color 0.3s ease; /* Transição suave de cor */
+}
+
+.switch-label svg {
+  font-size: 1.6rem; /* Tamanho dos ícones de sol e lua */
+  margin-right: 8px; /* Distância entre o ícone e o texto */
+}
+
+/* Estilo do switch */
+.theme-toggle {
+  margin-top: auto;
+  padding: 10px;
+  margin-right: 35px;
+  display: flex;
+  align-items: center; /* Alinha o switch e o texto */
+  justify-content: center;
+  flex-direction: row; /* Exibe o switch e o texto lado a lado */
+}
+
+/* Ajustando o switch para metade do tamanho */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px; /* Metade do tamanho original (de 80px para 40px) */
+  height: 22px; /* Metade do tamanho original (de 45px para 22px) */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 50px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px; /* Ajuste o tamanho do círculo interno */
+  width: 18px; /* Ajuste o tamanho do círculo interno */
+  border-radius: 50%;
+  left: 2px; /* Ajuste para centralizar o círculo interno */
+  bottom: 2px; /* Ajuste para centralizar o círculo interno */
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; /* Cor de fundo quando ativado */
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px); /* Ajuste para o círculo se mover corretamente */
+}
+
+.slider.round {
+  border-radius: 50px;
+}
+
+/* Texto ao lado do switch */
+.theme-text {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-left: 6px; /* Espaço entre o switch e o texto */
+  transition: color 0.3s ease; /* Transição suave para a mudança de cor */
+}
+
+body.light .theme-text {
+  color: #000; 
+}
+
+body.dark .theme-text {
+  color: #fff; 
+}
+
+body.light .theme-toggle .slider {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .theme-toggle .slider {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+body.light .theme-toggle .slider:before {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+body.dark .theme-toggle .slider:before {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2); 
 }
