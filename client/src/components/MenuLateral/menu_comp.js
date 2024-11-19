@@ -66,7 +66,7 @@ const MenuLateral = ({ setModalOpen }) => {
       <div className="lista">
         <ul>
           <li onClick={() => navigate('/home')}><FaHome className='icons' /> Home</li>
-          <li onClick={() => navigate('/explore')}><FaSearch className='icons' /> Explorar</li>
+          <li onClick={() => navigate('/localizacao')}><FaSearch className='icons' /> Localização</li>
           <li onClick={() => navigate('/messages')}><TbMessageCircleUser className='mensagem' /> Mensagens</li>
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
           <li onClick={() => navigate('/user-config')}><FaUserCog className='icons' /> Configurações</li>
