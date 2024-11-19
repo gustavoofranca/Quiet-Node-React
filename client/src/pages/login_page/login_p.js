@@ -1,27 +1,29 @@
 import React, { useContext } from 'react';
 import './login_p.css';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import LoginLight from "../../images/login-bg-light.jpg"; // Imagem para o tema claro
-import Login from "../../images/login-bg.png"; // Imagem para o tema escuro
+import Login from "../../images/login-bg.png";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from '../../context/ThemeContext'; // Usando o hook useTheme para acessar o contexto do tema
 
 const LoginPage = () => {
   const { currentTheme, toggleTheme } = useTheme(); // Acessando o tema atual e o método de alternância
 
-  // Definir o caminho da imagem com base no tema atual
-  const imageSrc = currentTheme === 'light' ? LoginLight : Login;
-
   return (
     <div className={`login-container ${currentTheme}`}>
       <div className="login-left">
         <div className="luz" />
-        <img src={imageSrc} alt="Car Image" className="car-image" />
+        <img 
+          src={currentTheme === 'light' ? require('../../images/login-bg-light.jpg') : Login} 
+          alt="Car Image" 
+          className="car-image" 
+        />
       </div>
 
       <div className="login-right">
+        {/* Switch de tema */}
         <div className="switch-container">
           <label htmlFor="theme-switch" className="switch-label">
-            {currentTheme === 'light' ? '🌞' : '🌙'}
+            {currentTheme === 'light' ? <FaSun /> : <FaMoon />}
           </label>
           <input
             id="theme-switch"
@@ -32,6 +34,7 @@ const LoginPage = () => {
           />
         </div>
 
+        {/* Formulário de login */}
         <LoginForm />
       </div>
     </div>
