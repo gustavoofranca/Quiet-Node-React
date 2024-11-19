@@ -54,13 +54,13 @@ const MenuLateral = ({ setModalOpen }) => {
   };
 
   return (
-    <div className="container" style={{ backgroundColor: currentTheme.background }}>
+    <div className={`container ${currentTheme}`}>
       <img src={userInfo.userImage} alt="Perfil" className="img-perfil" />
-      <p className="username" style={{ color: currentTheme.color }}>{userInfo.username}</p>
+      <p className="username">{userInfo.username}</p>
 
       <div className="follow-info">
-        <p style={{ color: currentTheme.color }}>434.4k<br />Seguidores</p>
-        <p style={{ color: currentTheme.color }}>1089<br />Seguindo</p>
+        <p>434.4k<br />Seguidores</p>
+        <p>1089<br />Seguindo</p>
       </div>
 
       <div className="lista">

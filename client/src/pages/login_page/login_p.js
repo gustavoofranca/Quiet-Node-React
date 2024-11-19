@@ -9,7 +9,7 @@ const LoginPage = () => {
   const { currentTheme, toggleTheme } = useTheme(); // Acessando o tema atual e o método de alternância
 
   return (
-    <div className={`login-container ${currentTheme}`}>
+    <div className={`login-container ${currentTheme}`}> {/* Aplicando o tema ao container */}
       <div className="login-left">
         <div className="luz" />
         <img 

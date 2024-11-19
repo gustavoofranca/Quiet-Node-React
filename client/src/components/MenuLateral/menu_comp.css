@@ -1,4 +1,4 @@
-/* menu_comp.css */
+/* Estilos globais */
 .container {
     width: 220px;
     height: 100vh;
@@ -9,10 +9,10 @@
     left: 0;
     display: flex;
     flex-direction: column;
-    background-color: #171717; 
-}
-
-.container::after {
+    background-color: #171717;
+  }
+  
+  .container::after {
     background-color: rgba(255, 255, 255, 0.2);
     content: '';
     position: absolute;
@@ -22,48 +22,48 @@
     height: 100%;
     box-shadow: 5px 0 10px rgba(255, 255, 255, 0.5);
     z-index: -1;
-}
-
-/* Estilos para o Tema Claro */
-body.light .container {
+  }
+  
+  /* Estilos para o Tema Claro */
+  .container.light {
     background-color: #f9f9f9; /* Cor de fundo mais clara */
     color: #333;
-}
-
-body.light .lista ul li {
+  }
+  
+  .container.light .lista ul li {
     color: #333; /* Cor dos itens no tema claro */
-}
-
-body.light .logout-container li {
+  }
+  
+  .container.light .logout-container li {
     color: #FF0000;
-}
-
-body.light .logout-container li:hover {
+  }
+  
+  .container.light .logout-container li:hover {
     background-color: #FF0000;
     color: #fff;
-}
-
-/* Estilos para o Tema Escuro */
-body.dark .container {
+  }
+  
+  /* Estilos para o Tema Escuro */
+  .container.dark {
     background-color: #171717; /* Cor de fundo escura */
     color: #fff;
-}
-
-body.dark .lista ul li {
+  }
+  
+  .container.dark .lista ul li {
     color: #fff; /* Cor dos itens no tema escuro */
-}
-
-body.dark .logout-container li {
+  }
+  
+  .container.dark .logout-container li {
     color: #FF0000;
-}
-
-body.dark .logout-container li:hover {
+  }
+  
+  .container.dark .logout-container li:hover {
     background-color: #FF0000;
     color: #fff;
-}
-
-/* Estilos para a imagem de perfil */
-.img-perfil {
+  }
+  
+  /* Estilos para a imagem de perfil */
+  .img-perfil {
     border-radius: 50%;
     border: 3px solid #FF0000;
     padding: 3px;
@@ -72,42 +72,39 @@ body.dark .logout-container li:hover {
     display: block;
     object-fit: cover;
     margin: 1rem auto;
-}
-
-/* Estilos para o nome de usuário */
-.username {
-    color: #fff;
+  }
+  
+  /* Estilos para o nome de usuário */
+  .username {
     font-size: 1.1rem;
     text-align: center;
-}
-
-/* Informações de seguidores */
-.follow-info {
+  }
+  
+  /* Informações de seguidores */
+  .follow-info {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
     margin-bottom: 1.5rem;
     text-align: center;
-}
-
-.follow-info p {
-    color: #fff;
+  }
+  
+  .follow-info p {
     font-size: 0.9rem;
-}
-
-/* Lista de navegação */
-.lista {
+  }
+  
+  /* Lista de navegação */
+  .lista {
     flex-grow: 1;
     text-align: left;
-}
-
-.lista ul {
+  }
+  
+  .lista ul {
     list-style: none;
     padding: 0;
-}
-
-.lista ul li {
-    color: #fff;
+  }
+  
+  .lista ul li {
     margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
@@ -117,58 +114,59 @@ body.dark .logout-container li:hover {
     transition: background-color 0.3s ease;
     padding-left: 1rem; /* Adicionando mais espaço à esquerda para o ícone */
     margin-right: 1rem;
-}
-.lista ul li:hover {
+  }
+  
+  .lista ul li:hover {
     background-color: rgba(255, 255, 255, 0.1);
-}
-
-.lista ul li i {
+  }
+  
+  .lista ul li i {
     margin-right: 2rem; /* Aumenta o espaço entre o ícone e o texto */
     flex-shrink: 0;
     color: #FF0000;
-}
-
-/* Estilos do logout */
-.logout-container {
+  }
+  
+  /* Estilos do logout */
+  .logout-container {
     align-self: flex-end;
     width: 100%;
     padding-top: 1rem;
     margin-bottom: 10px;
-}
-
-.logout-container ul {
+  }
+  
+  .logout-container ul {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.logout-container li {
+  }
+  
+  .logout-container li {
     display: flex;
     align-items: center;
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 5px;
-}
-
-.logout-container li:hover {
+  }
+  
+  .logout-container li:hover {
     background-color: #FF0000;
     color: #fff;
-}
-
-.logout-container .logout-icon {
+  }
+  
+  .logout-container .logout-icon {
     margin-right: 0.6rem;
     width: 20px;
     height: 20px;
     color: #FF0000;
     stroke-width: 2;
-}
-
-.logout-container li:hover .logout-icon {
+  }
+  
+  .logout-container li:hover .logout-icon {
     color: #fff;
-}
-
-/* Estilo para o menu lateral, com ajustes no switch */
-.theme-toggle {
+  }
+  
+  /* Estilo para o menu lateral, com ajustes no switch */
+  .theme-toggle {
     margin-top: auto;
     padding: 10px;
     margin-right: 35px;
@@ -176,23 +174,23 @@ body.dark .logout-container li:hover {
     align-items: center; /* Alinha o switch e o texto */
     justify-content: center;
     flex-direction: row; /* Exibe o switch e o texto lado a lado */
-}
-
-/* Ajustando o switch para metade do tamanho */
-.switch {
+  }
+  
+  /* Ajustando o switch para metade do tamanho */
+  .switch {
     position: relative;
     display: inline-block;
     width: 40px; /* Metade do tamanho original (de 80px para 40px) */
     height: 22px; /* Metade do tamanho original (de 45px para 22px) */
-}
-
-.switch input {
+  }
+  
+  .switch input {
     opacity: 0;
     width: 0;
     height: 0;
-}
-
-.slider {
+  }
+  
+  .slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -202,9 +200,9 @@ body.dark .logout-container li:hover {
     background-color: #ccc;
     transition: .4s;
     border-radius: 50px;
-}
-
-.slider:before {
+  }
+  
+  .slider:before {
     position: absolute;
     content: "";
     height: 18px; /* Ajuste o tamanho do círculo interno */
@@ -214,33 +212,32 @@ body.dark .logout-container li:hover {
     bottom: 2px; /* Ajuste para centralizar o círculo interno */
     background-color: white;
     transition: .4s;
-}
-
-input:checked + .slider {
+  }
+  
+  input:checked + .slider {
     background-color: #4CAF50; /* Cor de fundo quando ativado */
-}
-
-input:checked + .slider:before {
+  }
+  
+  input:checked + .slider:before {
     transform: translateX(18px); /* Ajuste para o círculo se mover corretamente */
-}
-
-.slider.round {
+  }
+  
+  .slider.round {
     border-radius: 50px;
-}
-
-/* Texto ao lado do switch */
-.theme-text {
-    color: #fff;
+  }
+  
+  /* Texto ao lado do switch */
+  .theme-text {
     font-size: 0.9rem;
     margin-left: 6px; /* Espaço entre o switch e o texto */
     transition: color 0.3s ease; /* Transição suave para a mudança de cor */
-}
-
-/* Estilo para texto dependendo do tema */
-body.light .theme-text {
+  }
+  
+  .container.light .theme-text {
     color: #000; /* Cor do texto no tema claro */
-}
-
-body.dark .theme-text {
+  }
+  
+  .container.dark .theme-text {
     color: #fff; /* Cor do texto no tema escuro */
-}
+  }
+  

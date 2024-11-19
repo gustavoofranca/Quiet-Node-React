@@ -5,6 +5,7 @@ body.light, body.dark {
   padding: 0;
 }
 
+/* Login Box */
 .login-box {
   width: 100%;
   max-width: 400px;
@@ -25,7 +26,9 @@ body.light {
 }
 
 body.dark {
+  --background: #171717;
   --text-color: #ecf0f1;
+  --input-background: #333;
   --button-background: #ff1900; /* Vermelho */
   --button-hover: #e74c3c; /* Laranja */
 }
@@ -134,3 +137,26 @@ h2 {
   font-size: 18px;
   color: var(--text-color);
 }
+
+/* Ajuste para o fundo e a cor do texto em todo o conteúdo */
+body.light {
+  --background: #fff;
+  --text-color: #333;
+  --input-background: #f7f7f7;
+  --button-background: #ff1900;
+  --button-hover: #e74c3c;
+}
+
+body.dark {
+  --background: #171717;
+  --text-color: #ecf0f1;
+  --input-background: #333;
+  --button-background: #ff1900;
+  --button-hover: #e74c3c;
+}
+
+body, .login-box {
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
