@@ -1,3 +1,4 @@
+/* index.css */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +6,89 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.1s, color 0.1s;
+  overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Tema Light */
+body.light {
+  background-color: #f9f9f9; /* Fundo branco */
+  color: #333; /* Texto escuro */
 }
+
+body.light .login-container,
+body.light .home-container,
+body.light .main-content {
+  background-color: #fff; /* Fundo das áreas principais em branco */
+}
+
+body.light .login-box,
+body.light .feed,
+body.light .addPost,
+body.light .userConfig {
+  background-color: #f0f0f0; /* Fundo de caixas e áreas secundárias em cinza claro */
+  color: #333; /* Texto escuro */
+  border: 1px solid #ccc; /* Bordas mais claras */
+}
+
+body.light .btn-primary {
+  background-color: #007bff; /* Botões em azul claro */
+  color: #fff;
+}
+
+body.light .btn-google {
+  background-color: #fff; /* Botões do Google com fundo branco */
+  color: #333;
+  border: 1px solid #ccc; /* Bordas mais suaves */
+}
+
+body.light .icon-eye {
+  color: #888; /* Ícones de olho em cinza claro */
+}
+
+/* Tema Dark */
+body.dark {
+  background-color: #171717; /* Fundo escuro */
+  color: #fff; /* Texto claro */
+}
+
+body.dark .login-container,
+body.dark .home-container,
+body.dark .main-content {
+  background-color: #121212; /* Fundo das áreas principais em escuro */
+}
+
+body.dark .login-box,
+body.dark .feed,
+body.dark .addPost,
+body.dark .userConfig {
+  background-color: #2a2a2a; /* Fundo de caixas e áreas secundárias mais escuras */
+  color: #fff; /* Texto claro */
+  border: 1px solid #444; /* Bordas mais escuras */
+}
+
+body.dark .btn-primary {
+  background-color: #e50914; /* Botões vermelhos */
+  color: #fff;
+}
+
+body.dark .btn-google {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #444; /* Bordas mais escuras */
+}
+
+body.dark .icon-eye {
+  color: #ccc; /* Ícones de olho em cinza claro */
+}
+
+/* Estilos adicionais para links */
+a {
+  color: inherit; /* Links herdando a cor do tema */
+}
+
+a:hover {
+  text-decoration: underline; /* Links sublinhados no hover */
+}
+
+

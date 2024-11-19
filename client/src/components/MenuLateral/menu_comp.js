@@ -1,10 +1,10 @@
-// menu_comp.js
 import React, { useState, useEffect } from 'react';
 import { FaHome, FaSearch, FaUserCog, FaPlusCircle } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import { TbMessageCircleUser } from "react-icons/tb";
 import './menu_comp.css';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext'; // Importando o contexto de tema
 
 // Importações para Firebase
 import { db } from '../../firebaseConnection';
@@ -16,8 +16,10 @@ const MenuLateral = ({ setModalOpen }) => {
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
 
+  // Usando o contexto de tema
+  const { currentTheme, toggleTheme } = useTheme(); 
+
   useEffect(() => {
-    // Recupera os dados do usuário do sessionStorage
     const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
     if (storedUserData && storedUserData.uid) {
       const userQuery = query(
@@ -52,17 +54,13 @@ const MenuLateral = ({ setModalOpen }) => {
   };
 
   return (
-    <div className="container">
-      <img
-        src={userInfo.userImage}
-        alt="Perfil"
-        className="img-perfil"
-      />
-      <p className="username">{userInfo.username}</p>
+    <div className="container" style={{ backgroundColor: currentTheme.background }}>
+      <img src={userInfo.userImage} alt="Perfil" className="img-perfil" />
+      <p className="username" style={{ color: currentTheme.color }}>{userInfo.username}</p>
 
       <div className="follow-info">
-        <p>434.4k<br />Seguidores</p>
-        <p>1089<br />Seguindo</p>
+        <p style={{ color: currentTheme.color }}>434.4k<br />Seguidores</p>
+        <p style={{ color: currentTheme.color }}>1089<br />Seguindo</p>
       </div>
 
       <div className="lista">
@@ -73,6 +71,18 @@ const MenuLateral = ({ setModalOpen }) => {
           <li onClick={novoPost}><FaPlusCircle className='icons' /> Novo post</li>
           <li onClick={() => navigate('/user-config')}><FaUserCog className='icons' /> Configurações</li>
         </ul>
+      </div>
+
+      {/* Botão de alternância de tema */}
+      <div className="theme-toggle">
+        <label className="switch">
+          <input type="checkbox" checked={currentTheme === 'dark'} onChange={toggleTheme} />
+          <span className="slider round"></span>
+        </label>
+        {/* Texto ao lado do switch */}
+        <span className="theme-text">
+          {currentTheme === 'dark' ? 'Tema Escuro' : ' Tema Claro'}
+        </span>
       </div>
 
       <div className="logout-container">
@@ -87,4 +97,3 @@ const MenuLateral = ({ setModalOpen }) => {
 };
 
 export default MenuLateral;
-// Teste

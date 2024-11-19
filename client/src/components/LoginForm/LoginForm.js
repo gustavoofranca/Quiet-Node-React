@@ -211,4 +211,3 @@ const LoginComp = () => {
 };
 
 export default LoginComp;
-// Teste

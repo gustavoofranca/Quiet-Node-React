@@ -157,26 +157,15 @@ input, textarea{
   text-decoration: underline;
 }
 
-:root {
-  --background: #fff;
-  --color: #000;
-  --input-background: #f0f0f0;
-  --input-color: #000;
-  --button-background: #007bff;
-  --button-color: #fff;
-  --overlay-background: rgba(0, 0, 0, 0.6);
-  --card-background: #f9f9f9;
-  --card-color: #000;
+/* Tema Light */
+body.light {
+  background-color: #f9f9f9;
+  color: #000;
 }
 
-.dark-theme {
-  --background: #171717;
-  --color: #fff;
-  --input-background: #3b3b3b;
-  --input-color: #fff;
-  --button-background: #ff4500;
-  --button-color: #fff;
-  --overlay-background: rgba(0, 0, 0, 0.8);
-  --card-background: #1f1f1f;
-  --card-color: #fff;
+/* Tema Dark */
+body.dark {
+  background-color: #171717;
+  color: #fff;
 }
+

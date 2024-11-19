@@ -218,4 +218,3 @@ const UserConfig = () => {
 
 export default UserConfig;
 
-// Teste

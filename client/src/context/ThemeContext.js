@@ -1,40 +1,50 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Define os dois temas
-const themes = {
-  dark: {
-    background: '#1b1b1b',
-    color: '#f0f0f0',
-    buttonBackground: '#ff4500',
-    buttonColor: '#fff',
-  },
-  light: {
-    background: '#f9f9f9',
-    color: '#1b1b1b',
-    buttonBackground: '#007bff',
-    buttonColor: '#fff',
-  },
-};
-
-// Cria o contexto do tema
+// Criando o contexto de tema
 const ThemeContext = createContext();
 
-// Provedor de tema
+export const useTheme = () => {
+  return useContext(ThemeContext);
+};
+
 export const ThemeProvider = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState(themes.dark);
+  const [currentTheme, setCurrentTheme] = useState('light');
+
+  useEffect(() => {
+    // Recupera o tema salvo no localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setCurrentTheme(savedTheme);
+    } else {
+      // Se não houver, usa o tema claro como padrão
+      setCurrentTheme('light');
+    }
+  }, []);
+
+  useEffect(() => {
+    // Salva o tema no localStorage
+    localStorage.setItem('theme', currentTheme);
+    document.body.className = currentTheme;
+  }, [currentTheme]);
 
   const toggleTheme = () => {
-    setCurrentTheme((prevTheme) =>
-      prevTheme === themes.dark ? themes.light : themes.dark
-    );
+    setCurrentTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  const theme = {
+    light: {
+      background: '#f9f9f9',
+      color: '#000',
+    },
+    dark: {
+      background: '#171717',
+      color: '#fff',
+    }
   };
 
   return (
-    <ThemeContext.Provider value={{ currentTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ currentTheme, setCurrentTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
-
-// Hook para acessar o tema
-export const useTheme = () => useContext(ThemeContext);
