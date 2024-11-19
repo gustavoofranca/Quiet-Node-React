@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Criando o contexto de tema
 const ThemeContext = createContext();
 
 export const useTheme = () => {
@@ -11,23 +10,21 @@ export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState('light');
 
   useEffect(() => {
-    // Recupera o tema salvo no localStorage
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       setCurrentTheme(savedTheme);
-      document.body.classList.add(savedTheme); // Adiciona a classe no body
+      document.body.classList.add(savedTheme); 
     } else {
-      // Se não houver, usa o tema claro como padrão
+
       setCurrentTheme('light');
-      document.body.classList.add('light'); // Adiciona a classe light por padrão
+      document.body.classList.add('light');
     }
   }, []);
 
   useEffect(() => {
-    // Salva o tema no localStorage e atualiza o body
     localStorage.setItem('theme', currentTheme);
-    document.body.classList.remove('light', 'dark'); // Remove qualquer classe existente
-    document.body.classList.add(currentTheme); // Adiciona a classe do tema atual
+    document.body.classList.remove('light', 'dark'); 
+    document.body.classList.add(currentTheme);
   }, [currentTheme]);
 
   const toggleTheme = () => {

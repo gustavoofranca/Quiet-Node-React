@@ -20,7 +20,7 @@
 .post-image {
     max-width: 100%;
     height: 480px;
-    object-fit: contain; 
+    object-fit: contain;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     margin-top: 1%;
@@ -74,6 +74,7 @@
 }
 
 .comment-icon {
+    color: #000; /* Preto no modo claro */
     cursor: pointer;
     transition: color 0.3s;
 }
@@ -96,7 +97,11 @@ body[data-theme='dark'] .comment-icon {
     color: white; /* Ícone de comentário branco no modo escuro */
 }
 
-/* Se você quiser que a cor mude ao passar o mouse, adicione o seguinte */
+/* Cor ao passar o mouse no modo escuro */
+body[data-theme='dark'] .like-icon:hover {
+    color: #e50914; /* Cor ao passar o mouse no modo escuro */
+}
+
 body[data-theme='dark'] .comment-icon:hover {
     color: #e50914; /* Cor ao passar o mouse no modo escuro */
 }

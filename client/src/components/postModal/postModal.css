@@ -43,11 +43,11 @@
 .modal-title {
     font-size: 1.5rem;
     font-weight: bold;
-    text-align: left; /* Alinhado à esquerda */
+    text-align: left;
 }
 
 .post-image-container {
-    text-align: center; /* Centraliza apenas a imagem */
+    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -60,7 +60,7 @@
 .post-description {
     font-size: 1rem;
     margin-bottom: 20px;
-    text-align: left; /* Alinhado à esquerda */
+    text-align: left;
 }
 
 .comment-section {
@@ -118,8 +118,8 @@
     border-radius: 5px;
     background: var(--input-background);
     color: var(--input-color);
-    resize: none; /* Bloqueia o redimensionamento */
-    height: 50px; /* Altura fixa para o input */
+    resize: none;
+    height: 50px;
 }
 
 .add-comment-btn {
@@ -133,5 +133,5 @@
 }
 
 .add-comment-btn:hover {
-    background-color: #e74c3c; /* Cor para hover */
+    background-color: #e74c3c;
 }

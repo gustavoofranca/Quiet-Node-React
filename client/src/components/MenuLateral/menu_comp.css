@@ -26,12 +26,12 @@
   
   /* Estilos para o Tema Claro */
   .container.light {
-    background-color: #f9f9f9; /* Cor de fundo mais clara */
+    background-color: #f9f9f9;
     color: #333;
   }
   
   .container.light .lista ul li {
-    color: #333; /* Cor dos itens no tema claro */
+    color: #333;
   }
   
   .container.light .logout-container li {
@@ -43,14 +43,13 @@
     color: #fff;
   }
   
-  /* Estilos para o Tema Escuro */
   .container.dark {
-    background-color: #171717; /* Cor de fundo escura */
+    background-color: #171717; 
     color: #fff;
   }
   
   .container.dark .lista ul li {
-    color: #fff; /* Cor dos itens no tema escuro */
+    color: #fff;
   }
   
   .container.dark .logout-container li {
@@ -61,8 +60,7 @@
     background-color: #FF0000;
     color: #fff;
   }
-  
-  /* Estilos para a imagem de perfil */
+
   .img-perfil {
     border-radius: 50%;
     border: 3px solid #FF0000;
@@ -74,13 +72,11 @@
     margin: 1rem auto;
   }
   
-  /* Estilos para o nome de usuário */
   .username {
     font-size: 1.1rem;
     text-align: center;
   }
   
-  /* Informações de seguidores */
   .follow-info {
     display: flex;
     justify-content: space-between;
@@ -92,8 +88,6 @@
   .follow-info p {
     font-size: 0.9rem;
   }
-  
-  /* Lista de navegação */
   .lista {
     flex-grow: 1;
     text-align: left;
@@ -113,7 +107,7 @@
     padding: 0.5rem;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    padding-left: 1rem; /* Adicionando mais espaço à esquerda para o ícone */
+    padding-left: 1rem;
     margin-right: 1rem;
   }
   
@@ -122,12 +116,11 @@
   }
   
   .lista ul li i {
-    margin-right: 2rem; /* Aumenta o espaço entre o ícone e o texto */
+    margin-right: 2rem; 
     flex-shrink: 0;
     color: #FF0000;
   }
   
-  /* Estilos do logout */
   .logout-container {
     align-self: flex-end;
     width: 100%;
@@ -166,23 +159,22 @@
     color: #fff;
   }
   
-  /* Estilo para o menu lateral, com ajustes no switch */
+
   .theme-toggle {
     margin-top: auto;
     padding: 10px;
     margin-right: 35px;
     display: flex;
-    align-items: center; /* Alinha o switch e o texto */
+    align-items: center; 
     justify-content: center;
-    flex-direction: row; /* Exibe o switch e o texto lado a lado */
+    flex-direction: row; 
   }
   
-  /* Ajustando o switch para metade do tamanho */
   .switch {
     position: relative;
     display: inline-block;
-    width: 40px; /* Metade do tamanho original (de 80px para 40px) */
-    height: 22px; /* Metade do tamanho original (de 45px para 22px) */
+    width: 40px; 
+    height: 22px;
   }
   
   .switch input {
@@ -206,39 +198,38 @@
   .slider:before {
     position: absolute;
     content: "";
-    height: 18px; /* Ajuste o tamanho do círculo interno */
-    width: 18px; /* Ajuste o tamanho do círculo interno */
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
-    left: 2px; /* Ajuste para centralizar o círculo interno */
-    bottom: 2px; /* Ajuste para centralizar o círculo interno */
+    left: 2px;
+    bottom: 2px;
     background-color: white;
     transition: .4s;
   }
   
   input:checked + .slider {
-    background-color: #4CAF50; /* Cor de fundo quando ativado */
+    background-color: #4CAF50;
   }
   
   input:checked + .slider:before {
-    transform: translateX(18px); /* Ajuste para o círculo se mover corretamente */
+    transform: translateX(18px); 
   }
   
   .slider.round {
     border-radius: 50px;
   }
   
-  /* Texto ao lado do switch */
   .theme-text {
     font-size: 0.9rem;
-    margin-left: 6px; /* Espaço entre o switch e o texto */
-    transition: color 0.3s ease; /* Transição suave para a mudança de cor */
+    margin-left: 6px; 
+    transition: color 0.3s ease;
   }
   
   .container.light .theme-text {
-    color: #000; /* Cor do texto no tema claro */
+    color: #000;
   }
   
   .container.dark .theme-text {
-    color: #fff; /* Cor do texto no tema escuro */
+    color: #fff;
   }
   
