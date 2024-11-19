@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { db, auth } from '../../firebaseConnection';
@@ -153,6 +154,7 @@ const UserConfig = () => {
                             <button className='edit-button' onClick={() => loadUserForEdit(value)}>Editar</button>
                         </li>
                     ))}
+                    <li onClick={() => navigate('/home')} ><FaHome className='icons' /> Home</li>
                 </ul>
 
                 <div className="addpost-form">
