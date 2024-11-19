@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../../firebaseConnection';
 import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { MdClose } from "react-icons/md";
 import { TiPencil } from "react-icons/ti"; // Ícone de editar
 import { FaRegTrashAlt } from "react-icons/fa"; // Ícone de excluir
@@ -59,12 +61,12 @@ const AddPost = ({ isOpen, closeModal }) => {
 
     async function addPost() {
         if (!owner) {
-            alert("Erro: Usuário não encontrado. Por favor, faça login novamente.");
+            toast.error("Usuário não encontrado. Por favor, faça login novamente.", { className: 'toast-error' });
             return;
         }
 
         if (!description.trim() || (!image.trim() && !imageURL.trim())) {
-            alert('Por favor, preencha todos os campos corretamente.');
+            toast.warn('Por favor, preencha todos os campos corretamente.', { className: 'toast-warn' });
             return;
         }
 
@@ -80,7 +82,7 @@ const AddPost = ({ isOpen, closeModal }) => {
                 image: imageToSave
             })
                 .then(() => {
-                    alert('Cadastro realizado com sucesso!');
+                    toast.success('Post realizado com sucesso!', { className: 'toast-success' });
                     setDescription('');
                     setImage('');
                     setImageURL('');
@@ -94,7 +96,7 @@ const AddPost = ({ isOpen, closeModal }) => {
 
     async function editPost(imageToSave) {
         if (!idPost) {
-            alert("Selecione um post para editar.");
+            toast.warn("Selecione um post para editar.", { className: 'toast-warn' });
             return;
         }
         const postEditado = doc(db, 'posts', idPost);
@@ -104,7 +106,7 @@ const AddPost = ({ isOpen, closeModal }) => {
             image: imageToSave
         })
             .then(() => {
-                alert('Post editado com sucesso!');
+                toast.success('Post editado com sucesso!', { className: 'toast-success' });
                 setIdPost('');
                 setDescription('');
                 setImage('');
@@ -120,7 +122,7 @@ const AddPost = ({ isOpen, closeModal }) => {
         const postExcluido = doc(db, 'posts', id);
         await deleteDoc(postExcluido)
             .then(() => {
-                alert('Post excluído com sucesso!');
+                toast.success('Post excluído com sucesso!', { className: 'toast-success' });
             })
             .catch((error) => {
                 console.log("Erro ao excluir o post:", error);
@@ -150,115 +152,128 @@ const AddPost = ({ isOpen, closeModal }) => {
     if (!isOpen) return null;
 
     return (
-        <div
-            className="modal-overlay"
-            style={{
-                background: currentTheme.overlayBackground, // Aplica tema ao fundo
-            }}
-        >
+        <>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div
-                className="addpost-main-container"
-                ref={modalRef}
+                className="modal-overlay"
                 style={{
-                    background: currentTheme.background, // Fundo do modal
-                    color: currentTheme.color, // Cor do texto
+                    background: currentTheme.overlayBackground, // Aplica tema ao fundo
                 }}
             >
-                <button
-                    className="close-btn"
-                    onClick={closeModal}
+                <div
+                    className="addpost-main-container"
+                    ref={modalRef}
                     style={{
-                        color: currentTheme.color,
+                        background: currentTheme.background, // Fundo do modal
+                        color: currentTheme.color, // Cor do texto
                     }}
                 >
-                    <MdClose size={30} />
-                </button>
-
-                <h3 className='username-modal'>Usuário: {owner || "Desconhecido"}</h3>
-
-                <div className="addpost-form">
-                    <label>Imagem (URL ou Arquivo):</label>
-                    <input
-                        type="text"
-                        placeholder="URL da Imagem"
-                        value={imageURL}
-                        onChange={(e) => setImageURL(e.target.value)}
+                    <button
+                        className="close-btn"
+                        onClick={closeModal}
                         style={{
-                            background: currentTheme.inputBackground,
-                            color: currentTheme.inputColor,
+                            color: currentTheme.color,
                         }}
-                    />
-                    <div className="file-input-container">
-                        <label
-                            className="file-input-label"
+                    >
+                        <MdClose size={30} />
+                    </button>
+
+                    <h3 className='username-modal'>Usuário: {owner || "Desconhecido"}</h3>
+
+                    <div className="addpost-form">
+                        <label>Imagem (URL ou Arquivo):</label>
+                        <input
+                            type="text"
+                            placeholder="URL da Imagem"
+                            value={imageURL}
+                            onChange={(e) => setImageURL(e.target.value)}
                             style={{
                                 background: currentTheme.inputBackground,
                                 color: currentTheme.inputColor,
                             }}
-                        >
-                            Selecione uma Imagem
-                            <input
-                                type="file"
-                                className="file-input"
-                                onChange={handleImageChange}
-                            />
-                        </label>
-                    </div>
+                        />
+                        <div className="file-input-container">
+                            <label
+                                className="file-input-label"
+                                style={{
+                                    background: currentTheme.inputBackground,
+                                    color: currentTheme.inputColor,
+                                }}
+                            >
+                                Selecione uma Imagem
+                                <input
+                                    type="file"
+                                    className="file-input"
+                                    onChange={handleImageChange}
+                                />
+                            </label>
+                        </div>
 
-                    {image && <img src={image} alt="Preview" className="image-preview" />}
-                    <label>Descrição:</label>
-                    <textarea
-                        placeholder="Descrição do Post"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        style={{
-                            background: currentTheme.inputBackground,
-                            color: currentTheme.inputColor,
-                        }}
-                    />
-
-                    <button
-                        className="addpost-form-button"
-                        onClick={addPost}
-                        style={{
-                            background: currentTheme.buttonBackground,
-                            color: currentTheme.buttonColor,
-                        }}
-                    >
-                        Salvar
-                    </button>
-                </div>
-
-                <h4 className='modal-list'>Lista de Posts</h4>
-                <div className="posts-container">
-                    {post.map((post) => (
-                        <div
-                            key={post.id}
-                            className="addpost-post-container"
+                        {image && <img src={image} alt="Preview" className="image-preview" />}
+                        <label>Descrição:</label>
+                        <textarea
+                            placeholder="Descrição do Post"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             style={{
-                                background: currentTheme.cardBackground,
-                                color: currentTheme.cardColor,
+                                background: currentTheme.inputBackground,
+                                color: currentTheme.inputColor,
+                            }}
+                        />
+
+                        <button
+                            className="addpost-form-button"
+                            onClick={addPost}
+                            style={{
+                                background: currentTheme.buttonBackground,
+                                color: currentTheme.buttonColor,
                             }}
                         >
-                            <div className="post-image-container">
-                                <img src={post.image} alt="Post" />
-                                <div className="post-buttons">
-                                    <button onClick={() => loadPostForEdit(post)}>
-                                        <TiPencil />
-                                    </button>
-                                    <button onClick={() => deletePost(post.id)}>
-                                        <FaRegTrashAlt />
-                                    </button>
+                            Salvar
+                        </button>
+                    </div>
+
+                    <h4 className='modal-list'>Lista de Posts</h4>
+                    <div className="posts-container">
+                        {post.map((post) => (
+                            <div
+                                key={post.id}
+                                className="addpost-post-container"
+                                style={{
+                                    background: currentTheme.cardBackground,
+                                    color: currentTheme.cardColor,
+                                }}
+                            >
+                                <div className="post-image-container">
+                                    <img src={post.image} alt="Post" />
+                                    <div className="post-buttons">
+                                        <button onClick={() => loadPostForEdit(post)}>
+                                            <TiPencil />
+                                        </button>
+                                        <button onClick={() => deletePost(post.id)}>
+                                            <FaRegTrashAlt />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="post-info2">
+                                    <p className="post-description">{post.description}</p>
                                 </div>
                             </div>
-                            <div className="post-info2">
-                                <p className="post-description">{post.description}</p>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

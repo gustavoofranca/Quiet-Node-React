@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { db, auth } from '../../firebaseConnection';
 import { signOut } from "firebase/auth";
 import { query, where, doc, collection, updateDoc, onSnapshot } from "firebase/firestore";
@@ -66,7 +68,7 @@ const UserConfig = () => {
 
     async function edituser() {
         if (!userID) {
-            alert("Selecione um usuário para editar.");
+            toast.warn("Selecione o usuário para editar.", { className: 'toast-warn' });
             return;
         }
         const userEditado = doc(db, 'users', userID);
@@ -88,7 +90,7 @@ const UserConfig = () => {
             };
             sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
 
-            alert('Usuário editado com sucesso!');
+            toast.success('Usuário editado com sucesso!', { className: 'toast-success' });
             setUserID('');
             setUserImage('');
             setImageUrl('');
@@ -118,16 +120,27 @@ const UserConfig = () => {
         try {
             await signOut(auth);
             sessionStorage.removeItem('userData');
-            alert('Você saiu da conta com sucesso!');
+            toast.success('Conta atualizada com sucesso!', { className: 'toast-success' });
             navigate('/');
         } catch (error) {
             console.error("Erro ao fazer logout:", error);
-            alert('Ocorreu um erro ao sair da conta. Tente novamente.');
+            toast.error('Ocorreu um erro ao atualizar a conta. Tente novamente.', { className: 'toast-error' });
         }
     }
 
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className='userConfig-main-container'>
                 <ul className="user-container">
                     {userInfo.map((value) => (
@@ -207,7 +220,7 @@ const UserConfig = () => {
                                 </span>
                             </div>
                         </div>
-                        <button className='addpost-form-button' onClick={edituser}>{userID ? "Atualizar" : "Sem usuário selecionado"}</button>
+                        <button className='addpost-form-button' onClick={edituser}>{userID ? "Atualizar" : "Usuário não selecionado, favor clique em editar "}</button>
                         <p className='userConfig-warning'>Obs: Você será redireciona à página de login ao atualizar.</p>
                     </div>
                 </div>
