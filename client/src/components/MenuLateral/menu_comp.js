@@ -55,7 +55,7 @@ const MenuLateral = ({ setModalOpen }) => {
 
   return (
     <div className="container" style={{ backgroundColor: currentTheme.background }}>
-      <img src={userInfo.userImage} alt="Perfil" className="img-perfil" />
+      <img src={userInfo.userImage  || "https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg"} alt="Perfil" className="img-perfil" />
       <p className="username" style={{ color: currentTheme.color }}>{userInfo.username}</p>
 
       <div className="follow-info">
