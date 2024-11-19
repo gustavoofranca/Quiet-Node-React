@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
+import config from './config.js';
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
 

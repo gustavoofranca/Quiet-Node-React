@@ -1,14 +1,17 @@
-import { firebaseapp } from "../firebase";
+import firebase from '../firebase.js';
 
 import {
-    getFirestore, collection, doc, addDoc,
+    getFirestore, 
+    collection, 
+    doc, 
+    addDoc,
     getDoc,
     getDocs,
     updateDoc,
     deleteDoc,
 } from 'firebase/firestore';
 
-const db = getFirestore(firebaseapp);
+const db = getFirestore(firebase);
 
 
 // ======= INÍCIO CRUD ===================================================================
