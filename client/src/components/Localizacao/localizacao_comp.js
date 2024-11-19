@@ -4,6 +4,7 @@ import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'; // Para a integração com a API de clima
+import Cookies from 'js-cookie'; // Importando a biblioteca de cookies
 import './localizacao_comp.css';
 
 const LocalizacaoComp = () => {
@@ -16,6 +17,13 @@ const LocalizacaoComp = () => {
   const API_KEY = '1dcc6c85fbdbc42ae3656c32e389e83f'; // Substitua pela sua chave da API OpenWeatherMap
 
   useEffect(() => {
+    // Carregar cidade salva em cookie
+    const cidadeSalva = Cookies.get('cidade');
+    if (cidadeSalva) {
+      setCidade(cidadeSalva); // Definir a cidade salva no estado
+      buscarClima(cidadeSalva); // Buscar o clima da cidade
+    }
+
     const loadLocations = () => {
       const unsubscribe = onSnapshot(collection(db, 'locations'), (snapshot) => {
         const fetchedLocations = snapshot.docs.map(doc => ({
@@ -52,17 +60,19 @@ const LocalizacaoComp = () => {
     }
   };
 
-  const buscarClima = async () => {
-    if (!cidade.trim()) {
+  const buscarClima = async (cidadeBusca) => {
+    if (!cidadeBusca.trim()) {
       toast.warn("Por favor, insira o nome de uma cidade.", { className: 'toast-warn' });
       return;
     }
 
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${API_KEY}&units=metric&lang=pt_br`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cidadeBusca}&appid=${API_KEY}&units=metric&lang=pt_br`
       );
       setClima(response.data);
+      // Salvar cidade no cookie para futuras sessões
+      Cookies.set('cidade', cidadeBusca, { expires: 7 }); // Cookie expira em 7 dias
     } catch (error) {
       console.error("Erro ao buscar dados do clima:", error);
       toast.error("Não foi possível buscar os dados do clima.", { className: 'toast-error' });
@@ -120,7 +130,7 @@ const LocalizacaoComp = () => {
             onChange={(e) => setCidade(e.target.value)}
             className="weather-input"
           />
-          <button onClick={buscarClima} className="weather-button">
+          <button onClick={() => buscarClima(cidade)} className="weather-button">
             Buscar Clima
           </button>
 
