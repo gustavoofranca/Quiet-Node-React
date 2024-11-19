@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/login_page/login_p';
 import HomePage from './pages/Home/home_p';
-import LocalizacaoPage from './pages/Localizacao/locaizacao_p'; // Caminho corrigido
+import LocalizacaoPage from './pages/Localizacao/localizacao_p'; // Caminho corrigido
 
 const AppRouter = () => {
     return (
