@@ -28,7 +28,7 @@
     border-radius: 10px;
     background-color: #2c2c2c;
     margin-bottom: 20px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 10px #ff4500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 4px #ff4500;
     border: 2px solid #ff4500;
     flex-direction: column;
     position: relative;
@@ -100,7 +100,7 @@
     padding: 25px;
     width: 100%;
     max-width: 500px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 10px #ff4500;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 4px #ff4500;
     border: 2px solid #ff4500;
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MenuLateral from '../../components/MenuLateral/menu_comp'; // Importa o menu lateral
+import AddPost from '../../components/addPost/addpost_comp';
 import './localizacao_p.css';
 
 const LocalizacaoPage = () => {
@@ -22,7 +23,7 @@ const LocalizacaoPage = () => {
     <div className="localizacao-container">
       {/* Menu Lateral */}
       <MenuLateral setModalOpen={setModalOpen} />
-      
+
       {/* Conteúdo Principal */}
       <div className="main-content">
         <div className="header">
@@ -38,7 +39,7 @@ const LocalizacaoPage = () => {
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
           />
-          
+
           <label htmlFor="location-map">Link do Mapa (Google Maps)</label>
           <textarea
             id="location-map"
@@ -47,7 +48,7 @@ const LocalizacaoPage = () => {
             value={mapaHtml}
             onChange={(e) => setMapaHtml(e.target.value)}
           />
-          
+
           <button onClick={handleAddLocalizacao}>
             Adicionar Localização
           </button>
@@ -69,6 +70,8 @@ const LocalizacaoPage = () => {
           ))}
         </div>
       </div>
+
+      <AddPost isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
     </div>
   );
 };
