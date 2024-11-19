@@ -1,11 +1,12 @@
 // LoginForm.js
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './loginform.css';
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../../context/ThemeContext'; // Importar o contexto do tema
 
 // Bibliotecas para criação e verificação de Usuário
 import { auth, db } from '../../firebaseConnection';
@@ -13,6 +14,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
 const LoginComp = () => {
+  const { theme } = useContext(ThemeContext); // Acessar o tema atual
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -151,9 +153,14 @@ const LoginComp = () => {
         draggable
         pauseOnHover
       />
-      <div className="login-box">
+      <div className={`login-box ${theme}`}>
         <div className="logo-container">
-          <img src={require('../../images/quiet-logo.png')} alt="Quiet Racing Club" className="logo" />
+          {/* Troca da logo com base no tema */}
+          <img
+            src={require(`../../images/quiet-logo${theme === 'light' ? '-preto' : ''}.png`)}
+            alt="Quiet Racing Club"
+            className="logo"
+          />
         </div>
 
         <h2>{action}</h2>

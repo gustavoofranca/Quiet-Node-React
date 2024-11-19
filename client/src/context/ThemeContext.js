@@ -31,16 +31,10 @@ export const ThemeProvider = ({ children }) => {
     setCurrentTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
-  const theme = {
-    light: {
-      background: '#f9f9f9',
-      color: '#000',
-    },
-    dark: {
-      background: '#171717',
-      color: '#fff',
-    }
-  };
+  const themes = {
+    light: { color: "#333", backgroundColor: "#f9f9f9" },
+    dark: { color: "#fff", backgroundColor: "#171717" },
+};
 
   return (
     <ThemeContext.Provider value={{ currentTheme, setCurrentTheme, toggleTheme }}>

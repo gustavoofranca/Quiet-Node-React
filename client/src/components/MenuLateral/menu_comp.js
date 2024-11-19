@@ -17,7 +17,7 @@ const MenuLateral = ({ setModalOpen }) => {
   const navigate = useNavigate();
 
   // Usando o contexto de tema
-  const { currentTheme, toggleTheme } = useTheme(); 
+  const { currentTheme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const storedUserData = JSON.parse(sessionStorage.getItem('userData'));

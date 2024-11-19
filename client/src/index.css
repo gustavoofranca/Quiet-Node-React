@@ -6,8 +6,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.1s, color 0.1s;
+  transition: background-color 0.2s, color 0.2s;
   overflow: hidden;
+  color: inherit; /* Herda a cor do tema para evitar valores fixos */
 }
 
 /* Tema Light */
@@ -20,6 +21,7 @@ body.light .login-container,
 body.light .home-container,
 body.light .main-content {
   background-color: #fff; /* Fundo das áreas principais em branco */
+  color: #333; /* Texto escuro para garantir legibilidade */
 }
 
 body.light .login-box,
@@ -46,6 +48,16 @@ body.light .icon-eye {
   color: #888; /* Ícones de olho em cinza claro */
 }
 
+body.light a {
+  color: #007bff; /* Links no tema claro */
+}
+
+body.light .username,
+body.light .follow-info p,
+body.light .theme-text {
+  color: #333; /* Texto no tema claro */
+}
+
 /* Tema Dark */
 body.dark {
   background-color: #171717; /* Fundo escuro */
@@ -56,6 +68,7 @@ body.dark .login-container,
 body.dark .home-container,
 body.dark .main-content {
   background-color: #121212; /* Fundo das áreas principais em escuro */
+  color: #fff; /* Texto claro */
 }
 
 body.dark .login-box,
@@ -82,13 +95,22 @@ body.dark .icon-eye {
   color: #ccc; /* Ícones de olho em cinza claro */
 }
 
+body.dark a {
+  color: #1da1f2; /* Links no tema escuro */
+}
+
+body.dark .username,
+body.dark .follow-info p,
+body.dark .theme-text {
+  color: #fff; /* Texto no tema escuro */
+}
+
 /* Estilos adicionais para links */
 a {
   color: inherit; /* Links herdando a cor do tema */
+  text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline; /* Links sublinhados no hover */
 }
-
-

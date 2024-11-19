@@ -10,7 +10,6 @@
 
 .login-left {
   flex: 1;
-  background-color: #000;
   position: relative;
 }
 
@@ -33,13 +32,43 @@
 .login-right {
   flex: 1;
   display: flex;
+  flex-direction: column; /* Para acomodar o switch e o formulário */
   justify-content: center;
   align-items: center;
-  background-color: #111111;
+  padding: 1rem;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Tema claro */
+body.light .login-left {
+  background-color: #f9f9f9;
+}
+
+body.light .login-right {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Tema escuro */
+body.dark .login-left {
+  background-color: #000;
+}
+
+body.dark .login-right {
+  background-color: #111111;
+  color: #fff;
+}
+
+.switch-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.switch-label {
+  font-size: 0.9rem;
+  cursor: pointer;
 }
